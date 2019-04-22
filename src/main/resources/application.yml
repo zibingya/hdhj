@@ -1,0 +1,22 @@
+server:
+  port: 80
+  
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: scott
+    password: tiger
+    
+  jpa:
+    database: oracle
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  mvc:
+    static-path-pattern: /static/**
+    
+  resources:
+    static-locations:
+    - classpath:/static/
