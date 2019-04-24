@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>站点基础信息管理:添加新站点</title>
+<style>
+    #station_kind_check{ 
+        width:100px;
+        height:20px;
+    }
+</style>
+
+</head>
+<body>
+	<form action="/addstationbasic/stationbasic" method="get">
+		<label>站点类型</label><select name="station_kind" size="4" id="station_kind_check">
+			       <option value="A" selected="selected">A</option>
+			       <option value="B">B</option>
+			       <option value="C">C</option>
+			       <option value="D">D</option>
+		     </select><br/>
+		<label>站点名称</label><input type="text" name="station_name"></input><br/>
+		<label>联系方式</label><input type="text" name="station_phone"></input><br/>
+		<label>管理员</label><input type="text" name="station_manager"></input><br/>
+		<label>所在镇</label><input type="text" name="station_town"></input><br/>
+		<label>所在村</label><input type="text" name="station_village"></input><br/>
+		<label>纬度</label><input type="text" name="station_longitude"></input><br/>
+		<label>经度</label><input type="text" name="station_latitude"></input><br/>
+		<label>描述</label><input type="text" name="station_description"></input><br/>
+		<label>旧名字</label><input type="text" name="station_pictureoldname" id="oldname"></input><br/>
+		<label>新名字</label><input type="text" name="station_picturenewname" id="newname"></input><br/>
+	    <label>存储位置</label><input type="text" name="station_pictureurl"></input><br/>
+	    <label>水警告类型</label><input type="text" name="station_waterwarningtype"></input><br/>
+	    <label> 水警最大倍数</label><input type="text" name="station_watermax"></input><br/>
+	    <label>水警最小倍数</label><input type="text" name="station_watermin"></input><br/>
+	       <input type="submit" value="提交" id="submit"></input>
+	 </form>
+</body>
+<script src="js/jquery-1.7.2.min.js" language="javascript" ></script>
+<script src="js/jquery-3.2.1.min.js" language="javascript"></script>
+<script>
+   function newname(){
+	   var date = new Date();//获取当前时间
+	   var yyyy = date.getFullYear();//年
+	   var MM = date.getMonth();//月
+	   var dd = date.getDate();//日
+	   var HH = date.getHours();//时
+	   var mm = date.getMinutes();//分
+	   var ss = date.getSeconds();//秒
+	   var mill = date.getMilliseconds()//毫秒
+	   var time = yyyy+MM+dd+HH+mm+ss+mill+"";//组装时间字符
+	   var oldname = document.getElementById("oldname");
+	   var newname = time+oldname;
+	   return newname;
+   }
+   $(function(e){
+	   $("#submit").click(function(){
+		   document.getElementById("newname").value = newname();
+	   });
+   })
+  
+   
+</script>
+</html>
