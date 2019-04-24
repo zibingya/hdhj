@@ -11,7 +11,7 @@ function panelLayout() {
 		enableTabScroll : true,
 		items : {
 			title : '首页',
-			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="https://www.baidu.com/"></iframe>'
+			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="../static/toobar2.html"></iframe>'
 		}
 	});
 	var viewPort = Ext.create('Ext.Viewport', {
