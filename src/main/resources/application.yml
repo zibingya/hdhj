@@ -13,10 +13,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
   mvc:
-    static-path-pattern: /static/**
+    view:
+      prefix: /webapp/
+      suffix: .html
     
-  resources:
-    static-locations:
-    - classpath:/static/
