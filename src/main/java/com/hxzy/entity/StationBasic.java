@@ -12,9 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 /**
  * 站点基础信息
@@ -102,6 +103,22 @@ public class StationBasic implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="pm_station_name", referencedColumnName = "station_name")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
+	
+	/**
+	 * *Warning(告警列表)集合
+	 */
+	@ManyToMany(cascade = CascadeType.DETACH)
+	@JoinTable(name = "Warning_Station_Basic",joinColumns=@JoinColumn(name = "station_no"),
+	inverseJoinColumns = @JoinColumn(name = "Warning_Station_no"))
+	private Set<Warning> warningSet = new HashSet<Warning>();
+	
+	public Set<Warning> getWarningSet() {
+		return warningSet;
+	}
+
+	public void setWarningSet(Set<Warning> warningSet) {
+		this.warningSet = warningSet;
+	}
 
 	public int getStation_no() {
 		return station_no;
