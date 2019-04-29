@@ -73,11 +73,11 @@ public class StationBasicController {
 	 * find one station
 	 * 查询单个站点
 	 * */
-	@GetMapping("/findonestationbasic/{id}")
-	public ModelAndView showChooesedStation(ModelAndView mav,@PathVariable(name="id",required=true) int id,HttpSession session) {
+	@GetMapping("/findonestationbasic")
+	public ModelAndView showChooesedStation(ModelAndView mav,int con,HttpSession session) {
 		mav.setViewName("/showstationbase");//重定向到站点基础信息展示页面
-		mav.addObject("stationSurvey",findOneStationSurvey(stationBasicService.findStationBasic(id), 1) );
-		mav.addObject("stationBasic",stationBasicService.findStationBasic(id));//从数据库中查
+		mav.addObject("stationSurvey",findOneStationSurvey(stationBasicService.findStationBasic(con), 1) );
+		mav.addObject("stationBasic",stationBasicService.findStationBasic(con));//从数据库中查
 //		int time = Integer.parseInt((String) session.getAttribute("time"));
 		int time = 1;
 		mav.addObject("powerMachine", findOnePowerMachine(time));

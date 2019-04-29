@@ -1,48 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="utf-8" />
 <title>Hello, World</title>
 <link rel="stylesheet"
-	href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
-<style type="text/css">
-html {
-	height: 100%
-}
-
-body {
-	height: 100%;
-	margin: 0px;
-	padding: 0px
-}
-
-#container {
-	height: 100%
-}
-</style>
+	href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" type="text/css" />
+<link rel="stylesheet" href="../static/css/map.css"></link>
+<script type="text/javascript" src="../static/ext-4.2.1/ext-all.js"></script>
+<script type="text/javascript" src="../static/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
+<link href="../static/ext-4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css"
+	rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-	<div>
-		状态说明【 
-		<input type="checkbox" value="allstation" onclick="stationchoose(1);" id="station" />所有站点 
-		<input type="checkbox" name="stationtype" value="A" onclick="stationchoose(2);" />A类站点 
-		<input type="checkbox" name="stationtype" value="B" onclick="stationchoose(2);" />B类站点
-		<input type="checkbox" name="stationtype" value="C" onclick="stationchoose(2);" />C类站点 
-		<input type="checkbox" name="stationtype" value="D" onclick="stationchoose(2);" />D类站点 
-		】
-	</div>
 	<div id="container"></div>
 </body>
+
 <script type="text/javascript"
 	src="http://api.map.baidu.com/api?v=2.0&ak=r8Sf8PxT4oD1liRB0CxpFE3C9FbbFf8M">
 	//v2.0版本的引用方式：src="http://api.map.baidu.com/api?v=2.0&ak=您的密钥"
 </script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
-<script src="/js/jquery-3.2.1.min.js"></script>
-<script src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../static/jquery/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="../static/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 	var map = new BMap.Map("container");// 创建地图实例  
 	var point = new BMap.Point(119.663056, 29.852344);// 创建点坐标  
@@ -54,48 +36,7 @@ body {
 	map.addControl(new BMap.MapTypeControl());
 	map.enableScrollWheelZoom();//启动鼠标滚轮缩放地图
 	map.enableKeyboard();//启动键盘操作地图
-
-	<!--选择站点类型实现全选和分选-->
-	function stationchoose(obj) {
-		var all = document.getElementById("station");
-		var stationtypes = document.getElementsByName("stationtype");
-		var temp = true;
-		if (obj == 1) {//<!--全选，遍历其他勾上checked-->
-			if (all.checked == true) {
-				for (var i = 0; i < stationtypes.length; i++) {
-					stationtypes[i].checked = "checked";
-					getmark();
-				}
-			} else {
-				for (var i = 0; i < stationtypes.length; i++) {
-					stationtypes[i].checked = "";
-				}
-			}
-		} else {//<!--不全选，遍历其他，如果全都选了则勾上全选-->
-			for (var i = 0; i < stationtypes.length; i++) {
-				if (stationtypes[i].checked == false) {
-					temp = false;
-					<!--如果有一个没勾则temp = false-->
-					break;
-				}
-				var tempPoints = mapPoints;
-				for(var j =0;j<mapPoints.length;j++){
-					if(mapPoints[j].title != stationtypes[i].value){
-						mapPoints.remove[j];
-					}
-				}
-				mapPoints = tempPoints;
-			}
-			if (temp) {
-				all.checked = "checked";
-				<!--如果全都选了则勾上全选-->
-			} else {
-				all.checked = "";
-				<!--如果temp = false则不能全选-->
-			}
-		}
-	}
-
+	
 	//新建乡镇标记,站点等级:01-->A,2-->B,3--C,4-->D
 	var point = new BMap.Point(119.617546,29.849653);
 	var marker = new BMap.Marker(point);
@@ -106,13 +47,10 @@ body {
          {x:29.841445,y:119.601735,title:"C",con:"64",branch:"4号站"},
          {x:29.841739,y:119.607943,title:"D",con:"65",branch:"5号站"}
      ];
-	 map.addOverlay(marker);
 	 map.enableScrollWheelZoom(true);
-	 	 
-	 //循环
-	 function getmark(){
+	 
 		 for(var i = 0;i<mapPoints.length;i++){
-			 var points = new BMap.Point(mapPoints[i].y,mapPoints[i].x);//添加标记
+			var points = new BMap.Point(mapPoints[i].y,mapPoints[i].x);
 			 var opts = {//展示信息窗口
 					 width:250,
 			         height:100,
@@ -124,9 +62,8 @@ body {
 			 var infoWindows = new BMap.InfoWindow(mapPoints[i].con,opts);
 			 markersshow(points,label,infoWindows,mapPoints[i].con);
 		 }
-	 }
 	 	 
-	 //展示标记
+	 //添加标记内容
 	 function markersshow(points,label,infoWindows,con){
 		 var markers = new BMap.Marker(points);
 		 var markerMenu = new BMap.ContextMenu();
@@ -139,7 +76,7 @@ body {
 		 map.addEventListener("rightclick",function(e){
 			  if(e.overlay){//判断右键单击的是否是marker 
 				  console.log("con:"+con);//如果是则出现根据station_no查询选项
-				  window.location.href="/findeonestationbasic/${con}";  
+				  window.location.href="/findeonestationbasic";  
 			  }else{
 				  if(confirm("确定添加新站点?")){
 					  form = $("<form></form>");
@@ -155,7 +92,7 @@ body {
 				      form.css('display','none')
 				      form.submit();
 				  }else{
-					  alert("您取消了添加新站点");
+					  alert("您取消了添加新站点"); 
 				  }    
 			  }
 		});  
@@ -177,5 +114,7 @@ body {
 	 //     alert(addComp.district + ", " + addComp.street);获取县，街道信息
 // 	    });        
 // 	});
+
+
 </script>
 </html>
