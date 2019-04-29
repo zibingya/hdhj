@@ -100,7 +100,7 @@ public class StationBasic implements Serializable {
 	/**
 	 * powermachine(动力设备)集合*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="pm_station_no",referencedColumnName="station_no")
+	@JoinColumn(name="pm_id",referencedColumnName="station_no")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
 
 	public int getStation_no() {

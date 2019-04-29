@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,9 +75,11 @@ public class StationBasicController {
 	 * find one station
 	 * 查询单个站点
 	 * */
-	@GetMapping("/findonestationbasic")
-	public ModelAndView showChooesedStation(ModelAndView mav,int con,HttpSession session) {
+	@GetMapping("/findonestationbasic/{con}")
+	@ResponseBody()
+	public ModelAndView showChooesedStation(ModelAndView mav,@PathVariable(name="con")int con,HttpSession session) {
 		mav.setViewName("/showstationbase");//重定向到站点基础信息展示页面
+		System.out.println("gz");
 		mav.addObject("stationSurvey",findOneStationSurvey(stationBasicService.findStationBasic(con), 1) );
 		mav.addObject("stationBasic",stationBasicService.findStationBasic(con));//从数据库中查
 //		int time = Integer.parseInt((String) session.getAttribute("time"));

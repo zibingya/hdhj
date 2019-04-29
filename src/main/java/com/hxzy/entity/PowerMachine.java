@@ -35,7 +35,7 @@ public class PowerMachine implements Serializable{
 	
 	/**pm_station_name外键关联站点名station_name*/
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},optional=false)//删除该表不影响是stationbasic
-	@JoinColumn(name="pm_station_name")
+	@JoinColumn(name="pm_station_no")
 	private StationBasic stationBasic;
 	
 	@Column(length = 50, nullable = true)
