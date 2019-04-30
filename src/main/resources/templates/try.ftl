@@ -22,9 +22,9 @@
 	<script type="text/javascript" src="../static/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 Ext.onReady(function () {
-  Ext.create('Ext.Panel', {
-    width: document.body.clientWidth,
-    height: document.body.clientHeight,
+  var tab = Ext.create('Ext.Panel', {
+    width: 'document.body.clientWidth',
+    height: 'document.body.clientHeight',
     title: "主页",
     layout: {
         type: 'hbox',
@@ -88,17 +88,17 @@ Ext.onReady(function () {
                        { text: "gzz", leaf: true}
                    ]},
                    { text: "横村镇", expanded: false,id:'h', children: [
-                       { text: "横村镇1号池", leaf: true,id:'61'},
-                       { text: "横村镇2号池", leaf: true,id:'62'},
-                       { text: "横村镇3号池", leaf: true,id:'63' },
-                       { text: "横村镇4号池", leaf: true,id:'64'},
-                       { text: "横村镇5号池", leaf: true,id:'65' },
-                       { text: "横村镇6号池", leaf: true,id:'66'},
-                       { text: "横村镇7号池", leaf: true,id:'67' },
-                       { text: "横村镇8号池", leaf: true,id:'68'},
-                       { text: "横村镇9号池", leaf: true,id:'69' },
-                       { text: "横村镇10号池", leaf: true,id:'70'},
-                   ]},
+                       { text: "横村镇1号池", leaf: true,id:'2'},
+                       { text: "横村镇2号池", leaf: true,id:'3'},
+                       { text: "横村镇3号池", leaf: true,id:'4' },
+                       { text: "横村镇4号池", leaf: true,id:'5'},
+                       { text: "横村镇5号池", leaf: true,id:'6' },
+                       { text: "横村镇6号池", leaf: true,id:'7'},
+                       { text: "横村镇7号池", leaf: true,id:'8' },
+                       { text: "横村镇8号池", leaf: true,id:'9'},
+                       { text: "横村镇9号池", leaf: true,id:'10' },
+                       { text: "横村镇10号池", leaf: true,id:'11'},
+                   ]},//横村镇children回括
                    { text: "钟山乡", expanded: false, children: [
                        { text: "gz", leaf: true },
                        { text: "gzz", leaf: true}
@@ -123,18 +123,31 @@ Ext.onReady(function () {
                        { text: "gz", leaf: true },
                        { text: "gzz", leaf: true}
                    ]}
-               ]},  
-            ]
-            
-        }
-        
-     }]
-     
+               ]},  //桐庐县回括
+            ]  //root下children回括  
+             
+        },//root回括   
+        listeners : {// 添加节点点击事件
+					itemclick : function(v, r, item) {
+						var n = tab.getComponent(r.raw.id);
+						alert(v);
+						if (r.raw.id == 'root') {
+							return;
+						}
+						if (!n) { // 判断是否已经打开该面板
+							n = tab.add({
+								'id' : r.raw.id,
+								'title' : r.raw.text,
+								closable : true, 
+								
+							});
+							findstation(r.raw.id);
+						}
+					}//itemclick回括
+        }//listener回括
+     }//treepanel回括
+     ] //主页下items回括
   });
-    listeners: {
-		var hengcun = Ext.getCmp('h');  
-		         
-    }   
 })
 
 
@@ -154,15 +167,15 @@ var map = new BMap.Map("container");// 创建地图实例
 	var marker = new BMap.Marker(point);
 	var mapPoints = [
          {x:29.849653,y:119.617546,title:"A",con:"2",branch:"横村镇1号池"},
-         {x:29.845267,y:119.618049,title:"A",con:"62",branch:"横村镇2号池"},
-         {x:29.839315,y:119.622145,title:"B",con:"63",branch:"横村镇3号池"},
-         {x:29.841445,y:119.601735,title:"C",con:"64",branch:"横村镇4号池"},
-         {x:29.841739,y:119.607943,title:"D",con:"65",branch:"横村镇5号池"},
-         {x:29.838200,y:119.629241,title:"A",con:"66",branch:"横村镇6号池"},
-         {x:29.831934,y:119.613934,title:"C",con:"67",branch:"横村镇7号池"},
-         {x:29.840487,y:119.597944,title:"B",con:"68",branch:"横村镇8号池"},
-         {x:29.834754,y:119.630463,title:"D",con:"69",branch:"横村镇9号池"},
-         {x:29.838325,y:119.620115,title:"A",con:"70",branch:"横村镇10号池"}
+         {x:29.845267,y:119.618049,title:"A",con:"3",branch:"横村镇2号池"},
+         {x:29.839315,y:119.622145,title:"B",con:"4",branch:"横村镇3号池"},
+         {x:29.841445,y:119.601735,title:"C",con:"5",branch:"横村镇4号池"},
+         {x:29.841739,y:119.607943,title:"D",con:"6",branch:"横村镇5号池"},
+         {x:29.838200,y:119.629241,title:"A",con:"7",branch:"横村镇6号池"},
+         {x:29.831934,y:119.613934,title:"C",con:"8",branch:"横村镇7号池"},
+         {x:29.840487,y:119.597944,title:"B",con:"9",branch:"横村镇8号池"},
+         {x:29.834754,y:119.630463,title:"D",con:"10",branch:"横村镇9号池"},
+         {x:29.838325,y:119.620115,title:"A",con:"11",branch:"横村镇10号池"}
      ];
 	 map.enableScrollWheelZoom(true);
 		 for(var i = 0;i<mapPoints.length;i++){

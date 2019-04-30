@@ -80,11 +80,11 @@ public class StationBasicController {
 	public ModelAndView showChooesedStation(ModelAndView mav,@PathVariable(name="con")int con,HttpSession session) {
 		mav.setViewName("/showstationbase");//重定向到站点基础信息展示页面
 		System.out.println("gz");
-		mav.addObject("stationSurvey",findOneStationSurvey(stationBasicService.findStationBasic(con), 1) );
+//		mav.addObject("stationSurvey",findOneStationSurvey(stationBasicService.findStationBasic(con), 1) );
 		mav.addObject("stationBasic",stationBasicService.findStationBasic(con));//从数据库中查
 //		int time = Integer.parseInt((String) session.getAttribute("time"));
-		int time = 1;
-		mav.addObject("powerMachine", findOnePowerMachine(time));
+//		int time = 1;
+//		mav.addObject("powerMachine", findOnePowerMachine(time));
 		return mav;
 	}
 	
@@ -109,103 +109,5 @@ public class StationBasicController {
 		mav.setViewName("forward:/stationbasic");
 		return mav;
 	}
-	
-	
-	
-	/**
-	 * 站点检测控制
-	 * 出水口水质，出水口流量，电控箱开合状态
-	 * */
-	
-	/**
-	 * 注入stationsurveyservice
-	 * */
-	@Resource(name="stationSurveyService")
-	private StationSurveyService stationSurveyService;
-	
-	/**
-	 * 每隔一个小时要存入一次站点检测表
-	 * */
-	@GetMapping("/addstationsurvey")
-	public ModelAndView addStationSurvey(@ModelAttribute StationSurvey stationSurvey,ModelAndView mav) {
-		mav.setViewName("redirect:/showstationbase");
-		stationSurveyService.addStationSurvey(stationSurvey);//存入最新监测信息
-		return mav;
-	}
-	
-	/**
-	 * @admin
-	 * 批量删除
-	 * */
-	@GetMapping("/delstationsurvey")
-	public ModelAndView delStationSurvey(@ModelAttribute List<Integer> times,ModelAndView mav) {
-		mav.setViewName("redirect:/stationsurvey");
-		stationSurveyService.delStationSurvey(times);//dba批量删除监测信息
-		return mav;
-	}
-	
-	/**
-	 * 由站点编号和当前时间查出实时监测表
-	 * */
-	public StationSurvey findOneStationSurvey(StationBasic stationBasic,int time) {
-		StationSurvey stationSurvey =  stationSurveyService.findOneStationSurvey(stationBasic.getStation_no(),time);//查出该站点该时刻的监测信息
-		return stationSurvey;
-	}
-	
-	/**
-	 * 由站点编号查出该站点所有监测表
-	 * */
-	public List<StationSurvey> findOneStationAllSurvey(int station_no) {
-		List<StationSurvey> list = stationSurveyService.findAllStationSurvey(station_no);//查出该站点历史监测信息而后在页面组合成不同报表
-		return list;
-	}
-	
-	/**
-	 * 动力设备
-	 * */
-	
-	/**
-	 * 注入powermachineservice
-	 * */
-	@Resource(name="powerMachineServiceImpl")
-	private PowerMachineService powerMachineService;
-	
-	/**
-	 * 添加powermachine
-	 * */
-	@GetMapping("/addpowermachine")
-	public ModelAndView addPowerMachine(@ModelAttribute PowerMachine powerMachine,ModelAndView mav) {
-		powerMachineService.addPowerMachine(powerMachine);
-		mav.setViewName("redirect:/showstationbase");
-		return mav;
-	}
-	
-	/**
-	 * 设备管理员单个删除
-	 * */
-	@DeleteMapping("/delpowermachine/{id}")
-	public ModelAndView delPowerMachineById(@ModelAttribute int time,ModelAndView mav) {
-		powerMachineService.delPowerMachine(time);
-		mav.setViewName("redirect:/showstationbase");
-		return mav;
-	}
-	
-	/**
-	 * powermachine单个修改
-	 * */
-	@GetMapping("/updpowermachine/updpowermachine")
-	public ModelAndView updPowerMachine(@ModelAttribute PowerMachine powerMachine,ModelAndView mav) {
-		powerMachineService.addPowerMachine(powerMachine);
-		mav.setViewName("redirect:/showstationbase");
-		return mav;
-	}
-	
-	/**
-	 * 单个查询powermachine
-	 * */
-//	@GetMapping("/findpowermachine/{time}")
-	public PowerMachine findOnePowerMachine(@PathVariable(name="time") int time) {
-	    PowerMachine powerMachine = powerMachineService.findOne(time);
-	    return powerMachine;
-	}
+
 }

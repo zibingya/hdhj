@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-public class LoginController {
+public class TemporaryController {
 	/**
 	 * 主页
 	 * */
@@ -24,6 +24,12 @@ public class LoginController {
 	@GetMapping("/trys")
 	public ModelAndView newt(ModelAndView mav) {
 		mav.setViewName("/try");
+		return mav;
+	}
+	
+	@GetMapping("/one")
+	public ModelAndView newst(ModelAndView mav) {
+		mav.setViewName("/onestation");
 		return mav;
 	}
 }

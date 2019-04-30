@@ -29,7 +29,7 @@ public class AttendanceRecord implements Serializable{
 
 	/** 人员 */
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},optional=false)
-	@JoinColumn(name="ar_ename")
+	@JoinColumn(name="ar_eid")
 	private Employee employee;
 
 	/** 到达时间 */

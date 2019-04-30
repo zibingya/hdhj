@@ -48,7 +48,7 @@ public class Employee {
 	private String Eemail;
 	
 	@OneToMany(cascade= CascadeType.REFRESH,fetch=FetchType.LAZY)
-	@JoinColumn(name="ar_ename",referencedColumnName="Ename")
+	@JoinColumn(name="ar_eid",referencedColumnName="Eid")
 	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public String getEname() {

@@ -88,7 +88,7 @@ public class StationBasic implements Serializable {
 	/**
 	 * stationsurvey(站点检测表集合)*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "survey_station_name", referencedColumnName = "station_name")
+	@JoinColumn(name = "survey_station_no", referencedColumnName = "station_no")
 	private Set<StationSurvey> surveySet = new HashSet<StationSurvey>();
 
 	/**
@@ -102,6 +102,12 @@ public class StationBasic implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="pm_id",referencedColumnName="station_no")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
+	
+	/**
+	 * attendanceRecord(考勤记录)集合*/
+	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name="ar_id",referencedColumnName="station_no")
+	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public int getStation_no() {
 		return station_no;

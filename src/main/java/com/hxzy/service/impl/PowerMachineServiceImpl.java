@@ -34,9 +34,9 @@ public class PowerMachineServiceImpl implements PowerMachineService{
 
 	@Transactional
 	@Override
-	public PowerMachine findOne(int time) {
+	public PowerMachine findOnePowerMachine(int station_no,int pm_id) {
 		// TODO Auto-generated method stub
-		return powerMachineDao.getOne(time);
+		return powerMachineDao.finOnePowerMachine(station_no, pm_id);
 	}
 
 }

@@ -7,5 +7,5 @@ public interface PowerMachineService {
 
 	public void delPowerMachine(int time);
 
-	public PowerMachine findOne(int time);
+	public PowerMachine findOnePowerMachine(int station_no,int pm_id);
 }

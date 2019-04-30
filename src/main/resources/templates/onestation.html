@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>单个站点展示</title>
+<link rel="stylesheet" type="text/css" href="../static/ext-4.2.1/resources/ext-theme-classic/ext-theme-classic-all.css" />
+<script type="text/javascript" src="../static/ext-4.2.1/ext-all.js"/> 
+<script type="text/javascript" src="../static/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/css/stationbase.css" />
+<style>
+    /*table 布局样式 start*/
+    .mytable>table{border-collapse: collapse;width:100%;padding-bottom:4px;}/*table-layout: fixed;*/
+    .mytable>table .thead{text-align:center;width: 100px;line-height: 1.2em;padding: 4px 0;}
+    .mytable>table td,th{border:1px solid #a4a4a4;text-align:center;vertical-align:middle;line-height: 28px;}
+    .mytable .x-table-form-item{padding:0;margin:0;width:100%;position: relative;}
+    .mytable .x-form-display-field-default {line-height: 1.2em;margin:0;padding:5px;}
+    .mytable .x-form-trigger-wrap-default{border:none;}
+    .mytable input,.mytable .x-form-display-field-default{text-align:left;}
+    .mytable .thead{background-color: #ebebeb;}
+    .mytable .placeholder-cell{border-right:none;border-left:none;}
+    /*table 布局样式 end*/
+</style>
+</head>
+<body>
+</body>
+<script src="../static/jquery/jquery-3.2.1.min.js"></script>
+<script src="../static/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {           
+            var tabs = new Ext.TabPanel({  //创建TabPanel  
+                 region: 'center', //border 布局，将页面分成东，南，西，北，中五部分，这里表示TabPanel放在中间   
+                 margins: '3 3 3 0',   
+                 activeTab: 0,   
+                 defaults: {   
+                    autoScroll: true   
+                 },  
+                 items: [{   
+                     title: '站点基础信息',
+                     layout: 'anchor', 
+                     align:'center',
+                     width: 1400,
+                     height: 600,
+                     align:'center',
+                     items: [
+                        {
+                            xtype: 'box',
+                            title: '75% Width and 20% Height',
+                            anchor: '50% 50%',
+                            autoEl: {  
+                                    tag: 'img',    //指定为img标签  
+                                    src: '../static/image/village2.jpg'   //指定url路径  
+                                } 
+                        },
+                        {
+                                xtype: 'table',
+                                title: '1',
+                                anchor: '50% 50%'
+                                layout: {
+                                    type: 'table',
+                                    columns: 3
+                                },
+                                defaults: {
+                             // applied to each contained panel
+                                    bodyStyle: 'padding:20px'
+                                },
+                                items: [{
+                                    html: 'Cell A content',
+                                    rowspan: 2
+                                },{
+                                    html: 'Cell B content',
+                                    colspan: 2
+                                },{
+                                    html: 'Cell C content',
+                                    cellCls: 'highlight'
+                                },{
+                                    html: 'Cell D content'
+                                }]
+                        }
+                     }] 
+                 ]},
+                 }, {   
+                     title: '站点检测',   
+                     html: "2"   
+                 },{   
+                     title: '动力设备',   
+                     html: "3Tab"   
+                 },{   
+                     title: '巡检工单',   
+                     html: "我4个Tab"   
+                 },{   
+                     title: '站点QOs',   
+                     html: "我是5个Tab"   
+                 }, {   
+                     title: '考勤记录',   
+                     html: "这6关闭的Tab",     
+                    }]   
+            });
+
+                 //定义一个Panel   
+                var nav = new Ext.Panel({   
+                     title: '菜单栏',   
+                     region: 'west', //放在西边，即左侧   
+                     split: true,   
+                     width: 200,   
+                     collapsible: true, //允许伸缩   
+                     margins: '3 0 3 3',   
+                     cmargins: '3 3 3 3'   
+                 });   
+    
+                 //如果窗口第一次被打开时才创建   
+                   var win = new Ext.Window({   
+                         title: 'Layout Window',   
+                         closable: true,   
+                         width: 1400,   
+                         height: 600,   
+                         border : false,   
+                         plain: true,   
+                         layout: 'border',   
+                         closeAction:'hide',   
+                         items: [nav, tabs]//把上面创建的panel和TabPanel放在window中，并采用border方式布局   
+                    });   
+                 win.show();  
+});  
+</script>
+</html>

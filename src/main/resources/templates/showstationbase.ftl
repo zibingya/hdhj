@@ -57,6 +57,7 @@
    </div>
    <!--基础信息结束-->
   <!--站点监测开始-->
+  <!--
    <div class="station" ">
           <div id="waterquality">
              <div id="surveytitle1">出水口水质</div>
@@ -214,9 +215,8 @@
 	  <div class="artitle">总计时长(分钟)是否有效</div>
    </div>
    <!--考勤记录结束-->
-
-    <script type="text/javascript" src="/js/ext-4.2.1.883/ext-all.js"/>
-    <script type="text/javascript" src="/js/ext-4.2.1.883/bootstrap.js"></script>      
+-->
+    <script type="text/javascript" src="/js/ext-4.2.1.883/ext-all.js"/> 
 	<script type="text/javascript" src="/js/ext-4.2.1.883/locale/ext-lang-zh_CN.js"></script>
 	<script src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/jquery-1.7.2.min.js"></script>
