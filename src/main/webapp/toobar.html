@@ -3,7 +3,6 @@
 <meta charset="utf-8" />
 <title>tabpanel</title>
 <script type="text/javascript" src="./public/ext-4.2.1/ext-all.js"></script>
-<script type="text/javascript" src="./public/ext-4.2.1/bootstrap.js"></script>
 <script type="text/javascript"
 	src="./public/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
 <link
@@ -320,9 +319,7 @@
 					}, ]
 				});
 				//窗口
-				var window = Ext
-						.create(
-								"Ext.window.Window",
+				var window = Ext.create("Ext.window.Window",
 								{
 									title : "学生成绩表",
 									layout : 'anchor',

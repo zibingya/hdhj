@@ -1,5 +1,6 @@
 package com.hxzy.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,12 @@ import javax.persistence.Table;
  * */
 @Entity
 @Table(name="Employee")
-public class Employee {
+public class Employee implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8200084210493074667L;
 
 	/** 巡维卡号 */
 	@Id
