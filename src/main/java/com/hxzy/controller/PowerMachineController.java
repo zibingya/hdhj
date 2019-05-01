@@ -57,8 +57,8 @@ public class PowerMachineController {
 	/**
 	 * 由time和station_no单个查询powermachine
 	 * */
-	@GetMapping("/findpowermachine/{pm_id}")
-	public ModelAndView findOnePowerMachine(@PathVariable(name="pm_id") int pm_id,ModelAndView mav,HttpSession session) {
+	@GetMapping("/findpowermachine/{id}")
+	public ModelAndView findOnePowerMachine(@PathVariable(name="id") int pm_id,ModelAndView mav,HttpSession session) {
 	    StationBasic stationBasic = (StationBasic) session.getAttribute("StationBasic");
 	    int station_no = stationBasic.getStation_no();
 		PowerMachine powerMachine = powerMachineService.findOnePowerMachine(station_no, pm_id);

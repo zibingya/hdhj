@@ -23,6 +23,7 @@ public class TemporaryController {
 	
 	@GetMapping("/trys")
 	public ModelAndView newt(ModelAndView mav) {
+		System.out.println("come in");
 		mav.setViewName("/try");
 		return mav;
 	}
@@ -30,6 +31,12 @@ public class TemporaryController {
 	@GetMapping("/one")
 	public ModelAndView newst(ModelAndView mav) {
 		mav.setViewName("/onestation");
+		return mav;
+	}
+	
+	@GetMapping("/getsurvey")
+	public ModelAndView newsy(ModelAndView mav) {
+		mav.setViewName("/showsurvey");
 		return mav;
 	}
 }

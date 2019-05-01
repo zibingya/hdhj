@@ -7,19 +7,7 @@
 <script type="text/javascript" src="../static/ext-4.2.1/ext-all.js"/> 
 <script type="text/javascript" src="../static/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
 <link rel="stylesheet" type="text/css" href="../static/css/stationbase.css" />
-<style>
-    /*table 布局样式 start*/
-    .mytable>table{border-collapse: collapse;width:100%;padding-bottom:4px;}/*table-layout: fixed;*/
-    .mytable>table .thead{text-align:center;width: 100px;line-height: 1.2em;padding: 4px 0;}
-    .mytable>table td,th{border:1px solid #a4a4a4;text-align:center;vertical-align:middle;line-height: 28px;}
-    .mytable .x-table-form-item{padding:0;margin:0;width:100%;position: relative;}
-    .mytable .x-form-display-field-default {line-height: 1.2em;margin:0;padding:5px;}
-    .mytable .x-form-trigger-wrap-default{border:none;}
-    .mytable input,.mytable .x-form-display-field-default{text-align:left;}
-    .mytable .thead{background-color: #ebebeb;}
-    .mytable .placeholder-cell{border-right:none;border-left:none;}
-    /*table 布局样式 end*/
-</style>
+
 </head>
 <body>
 </body>
@@ -56,7 +44,6 @@ Ext.onReady(function() {
                         {
                             xtype: 'panel',
                             title: '',
-
                             anchor: '1 60%',
                             layout: {
                                  type: 'table',
@@ -138,6 +125,13 @@ Ext.onReady(function() {
                       title: '站点监测',   
                       xtype: 'panel', 
                       id:'survey',  
+                      listeners:{ 
+                              itemclick:function(e) {
+                                      e.body.on('click', function() { 
+                                          console.log(1);             
+                                      });
+                              }
+                      }
                  },
                  {   
                      title: '动力设备',   
@@ -160,7 +154,7 @@ Ext.onReady(function() {
                 listeners:{
                           itemclick:function(v,r,item){
                              var n = tabs.getComponent(r.raw.id);
-                             alert(n);
+                             alert(1);
                              alert(r.raw.id);
                              if(r.raw.id == 'survey'){
                                  //点击站点检测从后台获取查询数据
@@ -180,11 +174,10 @@ Ext.onReady(function() {
                              } 
                              if(r.raw.id == 'ar'){//点击考勤记录打开最近的考勤纪录
                                 html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="/findonepis/"+station_no></iframe>'
-                             } 
-                              
-                          });
-                     },    
-            });
+                             }                              
+                          }//itemclick回括
+                }, //listener回括   
+            });//tabs回括
 
                  //定义一个Panel   
                 var nav = new Ext.Panel({   
@@ -210,8 +203,36 @@ Ext.onReady(function() {
                          items: [nav, tabs]//把上面创建的panel和TabPanel放在window中，并采用border方式布局   
                     });   
                  win.show();  
-                 
-                 //store
+
+            //stationbasic--store
+             Ext.define('stationBasic', {
+                 extend: 'Ext.data.Model',
+                 fields: [
+                     {name: 'station_kind',type:'string'},
+                     {name: 'station_no',  type:'int'},
+                     {name: 'station_name',type:'string'},
+                     {name: 'station_manager',type:'string'},
+                     {name: 'station_phone',type:'string'},
+                     {name: 'station_town',type:'string'},
+                     {name: 'station_village',type:'string'},
+                     {name: 'station_longitude',type:'double'},
+                     {name: 'station_latitude',type:'double'},
+                     {name: 'station_description',type:'string'}  
+                 ]
+             });
+            
+             var myStore = Ext.create('Ext.data.Store', {
+                 model: 'stationBasic',
+                 proxy: {
+                     type: 'ajax',
+                     url: '/users.json',
+                     reader: {
+                         type: 'json',
+                         root: 'users'
+                     }
+                 },
+                 autoLoad: true
+                });
 });  
 </script>
 </html>

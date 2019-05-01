@@ -54,9 +54,11 @@ public class StationBasic implements Serializable {
 	private String station_village;
 
 	/**经度*/
+	@Column(precision=12, scale=2)
 	private int station_longitude;
 	
 	/**纬度*/
+	@Column(precision=12, scale=2)
 	private int station_latitude;
 
 	/** 站点描述*/
@@ -100,7 +102,7 @@ public class StationBasic implements Serializable {
 	/**
 	 * powermachine(动力设备)集合*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="pm_id",referencedColumnName="station_no")
+	@JoinColumn(name="pm_station_no",referencedColumnName="station_no")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
 	
 	/**

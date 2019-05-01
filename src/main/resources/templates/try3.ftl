@@ -16,7 +16,7 @@
 	   src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
 </head>
  <body>
- <div id="container">123</div>
+ <div id="container" ></div>
 </body>
 <script type="text/javascript" src="../static/jquery/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src="../static/jquery/jquery-3.2.1.min.js"></script>
@@ -39,7 +39,7 @@ Ext.onReady(function () {
         xtype: 'panel',
         title: '地图',
         flex: 5,
-        anchor: '80%'  , 
+        anchor: '80%  '  , 
                 border : false,
                 el:'container' , 
                 layout : 'border',  
@@ -151,7 +151,7 @@ Ext.onReady(function () {
 })
 
 
-var map = new BMap.Map("container");// 创建地图实例 
+var map = new BMap.Map("container");// 创建地图实例  
 	var point = new BMap.Point(119.663056, 29.852344);// 创建点坐标  
 	map.centerAndZoom(point, 12);// 初始化地图，设置中心点坐标和地图级别
 	var geoc = new BMap.Geocoder();    
@@ -240,5 +240,4 @@ var map = new BMap.Map("container");// 创建地图实例
 // 	    });        
 // 	});  
 </script>
- 
 </html>

@@ -3,6 +3,7 @@ package com.hxzy.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,7 +52,7 @@ public class StationSurveyController {
 	/**
 	 * 由站点编号和当前时间查出实时监测表
 	 * */
-	@GetMapping("/findonestationsurvey/{time}")
+	@GetMapping("/getonestationsurvey/{time}")
 	public ModelAndView findOneStationSurvey(@ModelAttribute StationBasic stationBasic,@PathVariable(name="time",required=true) int time,ModelAndView mav) {
 		mav.addObject("stationSurvey", stationSurveyService.findOneStationSurvey(stationBasic.getStation_no(),time));//查出该站点该时刻的监测信息
 		mav.setViewName("/stationsurvey");
@@ -61,8 +62,10 @@ public class StationSurveyController {
 	/**
 	 * 由站点编号查出该站点所有监测表
 	 * */
-	public ModelAndView findOneStationAllSurvey(@ModelAttribute int station_no,ModelAndView mav) {
-		mav.addObject("stationSurvey", stationSurveyService.findAllStationSurvey(station_no));//查出该站点历史监测信息而后在页面组合成不同报表
+	@GetMapping("/getonestationsurvey/list")
+	public ModelAndView getOneStationAllSurvey(@ModelAttribute HttpSession session,ModelAndView mav) {
+		StationBasic stationBasic = (StationBasic) session.getAttribute("stationBasic");
+		mav.addObject("stationSurvey", stationSurveyService.findAllStationSurvey(stationBasic.getStation_no()));//查出该站点历史监测信息而后在页面组合成不同报表
 		mav.setViewName("rediret:stationsurvey");
 		return mav;
 	}
