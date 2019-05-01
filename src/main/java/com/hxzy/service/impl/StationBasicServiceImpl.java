@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,9 +47,8 @@ public class StationBasicServiceImpl implements StationBasicService{
 		return stationBasicDao.finOne(id);
 	}
 
-	@Transactional
 	@Override
-	public List<StationBasic> findStationBasic() {
+	public List<StationBasic> getStationBasicList() {
 		// TODO Auto-generated method stub
 		return stationBasicDao.findAll();
 	}

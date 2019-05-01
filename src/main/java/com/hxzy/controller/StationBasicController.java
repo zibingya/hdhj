@@ -106,7 +106,7 @@ public class StationBasicController {
 	 * */
 	@GetMapping("/stationbasic")
 	public ModelAndView findAllBasic(ModelAndView mav,@ModelAttribute StationBasic stationBasic,HttpSession session) {
-		List<StationBasic> stationBasicList = stationBasicService.findStationBasic();//查询list
+		List<StationBasic> stationBasicList = stationBasicService.getStationBasicList();//查询list
 		session.setAttribute("stationBasicList", stationBasicList);
 		mav.addObject("stationBasicList", stationBasicList);
 		mav.setViewName("/stationbasics");//转到站点基础信息页面

@@ -7,6 +7,6 @@ import com.hxzy.entity.AttendanceRecord;
 
 public interface AttendanceRecordDao extends JpaRepository<AttendanceRecord, Integer>{
 	
-	@Query("from AttendanceRecord ar,StationBasic sb where ar.stationBasic.station_no = station_no")
+	@Query("from AttendanceRecord ar where ar.stationBasic.station_no = :station_no")
 	public AttendanceRecord finOneAttendanceRecord(int station_no);
 }

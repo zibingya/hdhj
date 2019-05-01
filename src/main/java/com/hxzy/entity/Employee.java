@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -23,8 +24,8 @@ public class Employee {
 
 	/** 巡维卡号 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(nullable=false)
+	@SequenceGenerator(initialValue = 1, name = "suq_employee", sequenceName = "seq_employee_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suq_employee")
 	private int Eid;
 	
 	/** 巡维人员姓名 */
@@ -48,7 +49,7 @@ public class Employee {
 	private String Eemail;
 	
 	@OneToMany(cascade= CascadeType.REFRESH,fetch=FetchType.LAZY)
-	@JoinColumn(name="ar_eid",referencedColumnName="Eid")
+	@JoinColumn(name="ar_Eid",referencedColumnName="Eid")
 	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public String getEname() {

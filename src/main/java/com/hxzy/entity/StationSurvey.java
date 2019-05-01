@@ -10,10 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="Station_Survey")
+@Entity(name="Station_Survey")
 public class StationSurvey implements Serializable{
 	/**
 	 * 站点检测表
@@ -24,8 +24,8 @@ public class StationSurvey implements Serializable{
 
 	/**日期时刻,主键*/
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO) 
-	@Column(nullable=false)
+	@SequenceGenerator(initialValue = 1, name = "survey", sequenceName = "seq_stationsurvey_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "survey")
 	private int time;
 	
 	/**COD(mg/L)*/

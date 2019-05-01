@@ -13,13 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.SequenceGenerator;
 
 /**
  * 站点基础信息
  */
-@Entity
-@Table(name = "Station_Basic")
+@Entity(name = "Station_Basic")
 public class StationBasic implements Serializable {
 	private static final long serialVersionUID = 2521996776412219257L;
 
@@ -27,7 +26,7 @@ public class StationBasic implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
-	private int station_no;// 
+	private int station_no;
 
 	/**站点类型*/
 	@Column(length = 50, nullable = true)
@@ -54,11 +53,9 @@ public class StationBasic implements Serializable {
 	private String station_village;
 
 	/**经度*/
-	@Column(precision=12, scale=2)
 	private int station_longitude;
 	
 	/**纬度*/
-	@Column(precision=12, scale=2)
 	private int station_latitude;
 
 	/** 站点描述*/
@@ -102,13 +99,13 @@ public class StationBasic implements Serializable {
 	/**
 	 * powermachine(动力设备)集合*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="pm_station_no",referencedColumnName="station_no")
+	@JoinColumn(name="pm_station_no", referencedColumnName = "station_no")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
 	
 	/**
-	 * attendanceRecord(考勤记录)集合*/
-	@OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="ar_id",referencedColumnName="station_no")
+	 * AttendanceRecord(考勤记录)集合*/
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="ar_station_no", referencedColumnName = "station_no")
 	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public int getStation_no() {

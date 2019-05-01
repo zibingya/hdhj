@@ -10,10 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PowerMachine")
+@Table(name = "Power_Machine")
 public class PowerMachine implements Serializable{
 	private static final long serialVersionUID = 5915110881404758179L;
 
@@ -22,7 +23,6 @@ public class PowerMachine implements Serializable{
 	 * */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
 	private int pm_id;// 源设备地址
 
 	@Column(length = 50, nullable = true)
@@ -33,9 +33,9 @@ public class PowerMachine implements Serializable{
 	@Column(length = 50, nullable = true)
 	private int pm_line;// 设备线路
 	
-	/**pm_station_name外键关联站点名station_name*/
+	/**pm_station_no外键关联站点名station_no*/
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},optional=false)//删除该表不影响是stationbasic
-	@JoinColumn(name="pm_station_no")
+	@JoinColumn(name="pm_station_no", referencedColumnName = "station_no")
 	private StationBasic stationBasic;
 	
 	@Column(length = 50, nullable = true)
