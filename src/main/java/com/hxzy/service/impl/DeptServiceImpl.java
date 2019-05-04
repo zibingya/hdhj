@@ -52,7 +52,8 @@ public class DeptServiceImpl implements DeptService {
 	@SuppressWarnings("deprecation")
 	public Page<Dept> fy(int page, int size) {
 		// TODO Auto-generated method stub
-		Pageable pageable = new PageRequest(page, size);
+		Sort sort = new Sort(Sort.Direction.ASC,"deptno");
+		Pageable pageable = new PageRequest(page, size,sort);
 		Page<Dept> depts = deptDao.findAll(pageable);
 		
 		return depts;

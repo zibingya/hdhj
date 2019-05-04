@@ -251,12 +251,16 @@ Ext.onReady(function() {
 							waitMsg : '文件正在上传，请耐心等待....',
 							method : 'post',
 							success : function(response,o) {
-								Ext.Msg.alert('系统提示', '上传成功！');
-								//Ext.getCmp('uploadWindow').close();
-								//heatingStationAttachmentStore.load();
+								Ext.example.msg('添加', '添加成功！', true);
+								var grid = Ext.getCmp('showgrid');//通过grid的id取到grid
+								grid.store.reload();//刷新数据，也就是向后台请求数据再加载出来
+								form.reset();//清楚表单的记录
+								addWindow.close();
+								
 							},
 							failure : function(response,o) {
 								Ext.Msg.alert('系统提示', o.msg);
+								form.reset();
 								return;
 							}
 						});

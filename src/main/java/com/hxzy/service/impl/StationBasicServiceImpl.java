@@ -56,9 +56,9 @@ public class StationBasicServiceImpl implements StationBasicService {
 	@Override
 	public Page<StationBasic> fy(int page, int size) {
 		// TODO Auto-generated method stub
-		Sort sort = new Sort(Sort.Direction.DESC,"station_no");
-		Pageable pageable = new PageRequest(page, size,sort);
-		Page<StationBasic> stations = stationBasicDao.findAll(pageable);
+		//Sort sort = new Sort(Sort.Direction.DESC,"station_no");
+		Pageable pageable = new PageRequest(page, size);
+		Page<StationBasic> stations = stationBasicDao.findInOrders(pageable);
 		return stations;
 	}
 }

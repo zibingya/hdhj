@@ -1,6 +1,5 @@
 package com.hxzy.controller;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hxzy.entity.Employee;
 import com.hxzy.service.EmployeeService;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @RestController
