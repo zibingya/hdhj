@@ -371,7 +371,7 @@ function panelLayout() {
 							}, {
 								text : '日志管理',
 								leaf : true,
-								id : '#3'
+								id : 'systemlog'
 							}]
 				},
 				listeners : {

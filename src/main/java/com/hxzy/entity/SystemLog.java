@@ -1,7 +1,6 @@
 package com.hxzy.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,24 +18,24 @@ public class SystemLog implements Serializable {
 	@Id
 	@SequenceGenerator(initialValue = 1, name = "suq_systemlog", sequenceName = "suq_systemlog_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suq_systemlog")
-	private int id;//主键，让记录唯一
-	
+	private int id;// 主键，让记录唯一
+
 	private String username; // 用户名
 
 	private String operation; // 操作
 
 	private String method; // 方法名
-	
-	@Column(length=1000)
+
+	@Column(length = 1000)
 	private String params; // 参数
 
 	private String ip; // ip地址
 
 	private String createDate; // 操作时间
-	
-	private String returninfo;//方法返回信息
-	
-	private String type;//请求类型
+
+	private String returninfo;// 方法返回信息
+
+	private String type;// 请求类型
 
 	public String getType() {
 		return type;

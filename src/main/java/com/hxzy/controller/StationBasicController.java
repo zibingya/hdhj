@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +43,8 @@ public class StationBasicController {
 		return obj.toString();	
 	}
 	
-	@PostMapping("/addstation")
+	@SystemLogAn(value="添加站点")
+	@PostMapping("/station")
 	public String addStationBasic(@ModelAttribute StationBasic stationBasic,@RequestParam("upFile") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
 		String path = request.getSession().getServletContext().getRealPath("");
 		path = path+"public\\image\\station\\";
@@ -72,13 +75,14 @@ public class StationBasicController {
 	}
 	
 	@SystemLogAn(value="删除站点")
-	@PostMapping("/delstation")//@RequestParam("station_name") String station_name
+	@DeleteMapping("station")
 	public String delStationBasic(@ModelAttribute StationBasic stationBasic) {
 		stationBasicService.delStationBasic(stationBasic);
 		return "Y";
 	}
 	
-	@PostMapping("/updatestation")
+	@SystemLogAn(value="更新站点")
+	@PutMapping("/station")
 	public String updateStationBasic(@ModelAttribute StationBasic stationBasic) {
 		StationBasic save = stationBasicService.addStationBasic(stationBasic);
 		if(save == null) {

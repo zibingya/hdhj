@@ -1,5 +1,7 @@
 package com.hxzy.service;
 
+import org.springframework.data.domain.Page;
+
 import com.hxzy.entity.SystemLog;
 
 /**
@@ -9,4 +11,6 @@ import com.hxzy.entity.SystemLog;
 public interface SystemLogService {
 	//保存
 	public SystemLog addSystemLog(SystemLog systemLog);
+	
+	public Page<SystemLog> fy(int page, int size );
 }

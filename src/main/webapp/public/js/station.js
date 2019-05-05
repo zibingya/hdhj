@@ -2,12 +2,13 @@ Ext.onReady(function() {
 	Ext.tip.QuickTipManager.init();
 	var itemsPerPage = 2;// 设置每页所需的项数
 	var store = Ext.create('Ext.data.Store', {
-		fields : ['station_pictureurl', 'station_no', 'station_name',
+		fields : [
+				'station_pictureurl', 'station_no', 'station_name',
 				'station_kind', 'station_manager', 'station_phone',
 				'station_description','station_longitude','station_latitude'],
 		pageSize : itemsPerPage, // 页容量数据
 		// 是否在服务端排序 （true的话，在客户端就不能排序）
-		remoteSort : false,
+		remoteSort : true,
 		remoteFilter : true,
 		proxy : {
 			type : 'ajax',
@@ -155,9 +156,10 @@ Ext.onReady(function() {
 									for (var i = 0; i < records.length; i++) {
 										var model = records[i];//得到model
 										Ext.Ajax.request({
-											url : './delstation',
-											method : 'post',
+											url : './station',
+											method : 'delete',
 											params : {
+												//_method:"DELETE",
 												'station_name' : model.get('station_name'),
 												'station_no' : model.get('station_no'),
 												'station_pictureurl' : model.get('station_pictureurl'),
@@ -247,7 +249,7 @@ Ext.onReady(function() {
 				var form = addform.getForm();
 				var formUpload = Ext.getCmp('fileUploadForm');
 				formUpload.getForm().submit({
-							url :  './addstation',
+							url :  './station',
 							waitMsg : '文件正在上传，请耐心等待....',
 							method : 'post',
 							success : function(response,o) {
@@ -264,37 +266,6 @@ Ext.onReady(function() {
 								return;
 							}
 						});
-				/*Ext.Ajax.request({
-					url : './addstation',
-					method : 'post',
-					
-					params : {
-						'station_name' : form.findField("station_name").getValue(),
-						'station_pictureurl' : form.findField("station_pictureurl").getValue(),
-						'station_kind' : form.findField("station_kind").getValue(),
-						'station_manager' : form.findField("station_manager").getValue(),
-						'station_phone' : form.findField("station_phone").getValue(),
-						'station_description' : form.findField("station_description").getValue(),
-						'station_longitude' : form.findField("station_longitude").getValue(),
-						'station_latitude' : form.findField("station_latitude").getValue()
-					},
-					isUpload:true,
-					form:'form',
-					dataType : 'text',
-					waitMsg: '正在上传...',
-					success : function(response) {
-						var val = response.responseText
-						if (val == 'Y') {
-							Ext.example.msg('成功', '添加成功！', true);
-							var grid = Ext.getCmp('showgrid');//通过grid的id取到grid
-							grid.store.reload();//刷新数据，也就是向后台请求数据再加载出来
-							addWindow.close();
-						}
-						if (val == 'N') {
-							Ext.example.msg('成功', '添加失败,请重试！', true);
-						}
-					}
-				})*/
 			}
     }]
 	});
@@ -363,8 +334,8 @@ Ext.onReady(function() {
         	handler: function() {
 				var form = updateform.getForm();
 				Ext.Ajax.request({
-					url : './updatestation',
-					method : 'post',
+					url : './station',
+					method : 'put',
 					params : {
 						'station_name' : form.findField("station_name").getValue(),
 						'station_pictureurl' : form.findField("station_pictureurl").getValue(),

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -41,7 +40,6 @@ public class StationBasicServiceImpl implements StationBasicService {
 	@Override
 	public void delStationBasic(StationBasic stationBasic) {
 		// TODO Auto-generated method stub
-		System.out.println("删除");
 		stationBasicDao.deleteById(stationBasic.getStation_no());
 	}
 
@@ -56,7 +54,6 @@ public class StationBasicServiceImpl implements StationBasicService {
 	@Override
 	public Page<StationBasic> fy(int page, int size) {
 		// TODO Auto-generated method stub
-		//Sort sort = new Sort(Sort.Direction.DESC,"station_no");
 		Pageable pageable = new PageRequest(page, size);
 		Page<StationBasic> stations = stationBasicDao.findInOrders(pageable);
 		return stations;
