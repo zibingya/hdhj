@@ -41,9 +41,7 @@ public class SystemLogAop {
 	public void logPintCut() {
 	}
 
-	// 切面 配置通知
-	// @AfterReturning("logPintCut()")
-	// @Around("logPintCut()")
+	// 切面 方法结束后记录日志
 	@AfterReturning(returning = "ret", pointcut = "logPintCut()")
 	public void saveLog(JoinPoint joinPoint, Object ret) {
 		// 创建日志对象
@@ -58,6 +56,12 @@ public class SystemLogAop {
 			String value = myLog.value();
 			log.setOperation(value);// 保存获取的操作
 		}
+		// 获取用户ip地址
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		log.setIp(LoggerUtils.getCliectIp(request));
+		// 获取请求类型
+		log.setType(LoggerUtils.getRequestType(request));
 		// 获取请求的类名
 		String className = joinPoint.getTarget().getClass().getName();
 		// 获取请求的方法名
@@ -70,11 +74,11 @@ public class SystemLogAop {
 		for (int i = 0; i < args.length; i++) {
 			if (args[i] instanceof ServletRequest || args[i] instanceof ServletResponse
 					|| args[i] instanceof MultipartFile) {
-				// ServletRequest不能序列化，从入参里排除，否则报异常：java.lang.IllegalStateException: It is
-				// illegal to call this method if the current request is not in asynchronous
-				// mode (i.e. isAsyncStarted() returns false)
-				// ServletResponse不能序列化 从入参里排除，否则报异常：java.lang.IllegalStateException:
-				// getOutputStream() has already been called for this response
+				/* 	ServletRequest不能序列化，从入参里排除，否则报异常：java.lang.IllegalStateException: It is
+				 	illegal to call this method if the current request is not in asynchronous
+				 	mode (i.e. isAsyncStarted() returns false)
+				 	ServletResponse不能序列化 从入参里排除，否则报异常：java.lang.IllegalStateException:
+				 	getOutputStream() has already been called for this response*/
 				continue;
 			}
 			arguments[i] = args[i];
@@ -94,16 +98,13 @@ public class SystemLogAop {
 		String date = newsdf.format(new Date());
 		log.setCreateDate(date);
 
-		// 获取用户名
-//        log.setUsername(ShiroUtils.getUserEntity().getUsername());
-		// 获取用户ip地址
-		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-		HttpServletRequest request = attributes.getRequest();
-		log.setIp(LoggerUtils.getCliectIp(request));
-		// 获取请求类型
-		log.setType(LoggerUtils.getRequestType(request));
 		// 获取方法返回值
-		log.setReturninfo(ret.toString());
+		if(ret != null) {
+			log.setReturninfo(ret.toString());
+		}else {
+			log.setReturninfo("无返回值");
+		}
+		
 		// 调用service保存
 		systemLogService.addSystemLog(log);
 	}

@@ -19,12 +19,6 @@ Ext.onReady(function() {
 				totalProperty: 'totalElements' //数据总条数
 			}
 		},
-		sorters : [{
-			// 排序字段。
-			property : 'ordeId',
-			// 排序类型，默认为 ASC
-			direction : 'desc'
-		}],
 		autoLoad : true// 即时加载数据
 	});
 	store.load({
@@ -170,7 +164,7 @@ Ext.onReady(function() {
 												'station_longitude' : model.get('station_longitude'),
 												'station_latitude' : model.get('station_latitude')
 											},
-											dataType : 'text',
+											dataType : 'json',
 											success : function(response) {
 												var val = response.responseText
 												if (val == 'Y') {
@@ -261,7 +255,7 @@ Ext.onReady(function() {
 								
 							},
 							failure : function(response,o) {
-								Ext.Msg.alert('系统提示', o.msg);
+								Ext.Msg.alert('系统提示', '失败！！！');
 								form.reset();
 								return;
 							}

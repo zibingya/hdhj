@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hxzy.aop.SystemLogAn;
 import com.hxzy.entity.Dept;
 import com.hxzy.service.DeptService;
 
@@ -44,6 +45,7 @@ public class DeptController {
 		return obj.toString();
 	}
 
+	@SystemLogAn(value="添加部门")
 	@PostMapping("/adddept")
 	public String addDept(@ModelAttribute Dept dept) {
 		Dept temp = null;
@@ -61,6 +63,7 @@ public class DeptController {
 		}
 	}
 
+	@SystemLogAn(value="更新部门信息")
 	@PostMapping("/updatedept")
 	public String updateDept(@ModelAttribute Dept dept) {
 		try {
@@ -73,6 +76,7 @@ public class DeptController {
 		return "Y";
 	}
 
+	@SystemLogAn(value="删除部门")
 	@PostMapping("/deldept")
 	public String deleteDept(@ModelAttribute Dept dept) {
 		try {
@@ -85,6 +89,7 @@ public class DeptController {
 		return "Y";
 	}
 
+	@SystemLogAn(value="导出部门excel")
 	@GetMapping("/deptexcel")
 	public void Excel(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println(request.getSession().getServletContext().getRealPath("/"));

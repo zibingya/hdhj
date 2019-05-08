@@ -130,7 +130,7 @@ Ext.onReady(function() {
 			displayInfo : true
 		}]
 	});
-	
+		
 	window.show();
 	//win.container.addClass('x-window-maximized-ct'); 
 	window.fitContainer();// 填充满浏览器

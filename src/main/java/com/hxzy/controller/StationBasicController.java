@@ -46,12 +46,14 @@ public class StationBasicController {
 	@SystemLogAn(value="添加站点")
 	@PostMapping("/station")
 	public String addStationBasic(@ModelAttribute StationBasic stationBasic,@RequestParam("upFile") MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+		
 		String path = request.getSession().getServletContext().getRealPath("");
 		path = path+"public\\image\\station\\";
-		File localFile = new File(path);
 		SimpleDateFormat newsdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		String date = newsdf.format(new Date());
-		String newPath = path+date+file.getOriginalFilename();
+		String upname = file.getOriginalFilename();
+		String newPath = path+date+upname.substring(upname.lastIndexOf("."));
+		System.out.println(newPath);
 		File newFile = new File(newPath);
 		if(!newFile.exists()) {
 			try {
@@ -60,10 +62,10 @@ public class StationBasicController {
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
-				return "{success:false,msg:N'}";
+				return "{success:false,msg:'N'}";
 			}
 		}
-		String url = date+file.getOriginalFilename();
+		String url = date+upname.substring(upname.lastIndexOf("."));
 		stationBasic.setStation_pictureurl(url);
 		StationBasic save = stationBasicService.addStationBasic(stationBasic);
 		if(save == null) {
@@ -76,9 +78,22 @@ public class StationBasicController {
 	
 	@SystemLogAn(value="删除站点")
 	@DeleteMapping("station")
-	public String delStationBasic(@ModelAttribute StationBasic stationBasic) {
-		stationBasicService.delStationBasic(stationBasic);
-		return "Y";
+	public String delStationBasic(@ModelAttribute StationBasic stationBasic,HttpServletRequest request) {
+		String path = request.getSession().getServletContext().getRealPath("");
+		path = path+"public\\image\\station\\"+stationBasic.getStation_pictureurl();
+		try {
+			stationBasicService.delStationBasic(stationBasic);
+			File file = new File(path);
+			if(file.delete()) {
+				return "Y";
+			}else {
+				return "N";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "N";
+		}
 	}
 	
 	@SystemLogAn(value="更新站点")
@@ -91,4 +106,5 @@ public class StationBasicController {
 		return "Y";
 		
 	}
+	
 }
