@@ -20,4 +20,6 @@ public interface StationBasicService {
 	public StationBasic updateStationBasic(StationBasic stationBasic);
 	//分页
 	public Page<StationBasic> fy(int page, int size);
+	//hzl 按照类型查站点
+	public StationBasic findOne(String station_kind);
 }

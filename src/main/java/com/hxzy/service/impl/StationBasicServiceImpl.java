@@ -58,4 +58,9 @@ public class StationBasicServiceImpl implements StationBasicService {
 		Page<StationBasic> stations = stationBasicDao.findInOrders(pageable);
 		return stations;
 	}
+	
+	public StationBasic findOne(String station_kind) {
+		// TODO Auto-generated method stub
+		return stationBasicDao.findOne(station_kind);
+	}
 }

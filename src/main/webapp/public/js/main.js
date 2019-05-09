@@ -135,20 +135,8 @@ function panelLayout() {
 					autoShow : true,
 					children : [{
 								text : '考勤规则设置',
-								id : '#1',// 这个id用来与下方的监听是否存在，如果存在就不打开
+								id : 'attendance',// 这个id用来与下方的监听是否存在，如果存在就不打开
 								leaf : true
-							}, {
-								text : '巡维考勤',
-								leaf : true,
-								id : '#2'
-							}, {
-								text : '巡检工作',
-								leaf : true,
-								id : '#3'
-							}, {
-								text : '工单管理',
-								leaf : true,
-								id : '#3'
 							}]
 				},
 				listeners : {
@@ -163,7 +151,7 @@ function panelLayout() {
 								'id' : r.raw.id,
 								'title' : r.raw.text,
 								closable : true, // 通过html载入目标页
-								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./index/tree2.html"></iframe>'
+								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./'+r.raw.id+'.html"></iframe>'
 							});
 						}
 						tab.setActiveTab(n);
@@ -260,12 +248,12 @@ function panelLayout() {
 					autoShow : true,
 					children : [{
 								text : '告警列表',
-								id : '#1',// 这个id用来与下方的监听是否存在，如果存在就不打开
+								id : 'toobar',// 这个id用来与下方的监听是否存在，如果存在就不打开
 								leaf : true
 							}, {
 								text : '异常数据汇总表',
 								leaf : true,
-								id : '#2'
+								id : 'toobar2'
 							}]
 				},
 				listeners : {
@@ -280,7 +268,7 @@ function panelLayout() {
 								'id' : r.raw.id,
 								'title' : r.raw.text,
 								closable : true, // 通过html载入目标页
-								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./index/tree2.html"></iframe>'
+								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./'+r.raw.id+'.html"></iframe>'
 							});
 						}
 						tab.setActiveTab(n);

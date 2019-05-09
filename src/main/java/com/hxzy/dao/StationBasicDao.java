@@ -11,5 +11,7 @@ import com.hxzy.entity.StationBasic;
 public interface StationBasicDao extends JpaRepository<StationBasic, Integer>, JpaSpecificationExecutor<StationBasic> {
 
 	@Query("from com.hxzy.entity.StationBasic s ORDER BY s.station_no desc")
-	Page<StationBasic> findInOrders(Pageable pageable);
+	public Page<StationBasic> findInOrders(Pageable pageable);
+	@Query("from com.hxzy.entity.StationBasic where station_kind = ?1")
+	public StationBasic findOne(String station_kind);
 }

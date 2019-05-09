@@ -12,8 +12,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * 站点基础信息
@@ -101,6 +110,34 @@ public class StationBasic implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="pm_station_name", referencedColumnName = "station_name")
 	private Set<PowerMachine> pmSet = new HashSet<PowerMachine>();
+	
+	/**
+	 * warning(告警列表)
+	 */
+	@OneToOne(mappedBy="stationBasic")//关系为被维护方
+	private Warning warning;
+	
+	/**
+	 * *考勤规则列表
+	 * @return
+	 */
+	@OneToMany(mappedBy="stationBasic")//关系为被维护方
+	private Set<AttendanceLaw> al = new HashSet<AttendanceLaw>();
+	public Set<AttendanceLaw> getAl() {
+		return al;
+	}
+
+	public void setAl(Set<AttendanceLaw> al) {
+		this.al = al;
+	}
+
+	public Warning getWarning() {
+		return warning;
+	}
+
+	public void setWarning(Warning warning) {
+		this.warning = warning;
+	}
 
 	public int getStation_no() {
 		return station_no;

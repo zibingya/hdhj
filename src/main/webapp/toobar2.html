@@ -1,0 +1,211 @@
+<html>
+<head>
+
+	<meta charset="utf-8"/>
+	<title>tabpanel</title>
+	<script type="text/javascript" src="./public/ext-4.2.1/ext-all.js"></script>
+<script type="text/javascript" src="./public/ext-4.2.1/bootstrap.js"></script>
+<script type="text/javascript" src="./public/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
+<link href="./public/ext-4.2.1/resources/ext-theme-neptune/ext-theme-neptune-all.css"
+	rel="stylesheet" />
+	</head>
+	<body>
+	</body>
+	<style>
+		
+	</style>
+	<script>
+        Ext.onReady(function () {
+        	 
+			var itemsPerPage = 2;// 设置每页所需的项数
+            var store = Ext.create('Ext.data.Store', {
+                fields: ['warning_id','warning_type', 'stationBasic.station_town', 'stationBasic.station_village','stationBasic.station_name','warning.warning_level','warning_content','warning_wetherValid','warning_wetherDealed','warning_time',],	
+                pageSize: itemsPerPage,  //页容量数据
+                //是否在服务端排序 （true的话，在客户端就不能排序）
+                remoteSort: false,
+                remoteFilter: true,
+                proxy: {
+                    type: 'ajax',
+                    url:"/seleteWarning",
+                    reader: {   //这里的reader为数据存储组织的地方
+                        type: 'json', //返回数据类型为json格式
+//                         root: 'stationbasic'//根节点
+                        //totalProperty: 'total' //数据总条数
+                    }
+                },
+                sorters: [{
+                    //排序字段。
+                    property: 'ordeId',
+                    //排序类型，默认为 ASC 
+                    direction: 'desc'
+                }],
+                autoLoad: true  //即时加载数据
+            });
+			store.load({
+				params: {
+					start: 0,
+					limit: itemsPerPage
+				}
+			});
+			//告警分类下拉框数据源
+			var store_warning_type = new Ext.data.JsonStore({
+			    fields: ['warning_type'],
+			    data:[{"warning_type":"水流量为零"},
+			    	{"warning_type":"动力设备超24小时未开"}]
+			});
+			//乡镇下拉框数据
+			var store_station_town = Ext.create('Ext.data.Store', {
+			fields: ['station_town'],
+			data : [
+				{"station_town":"城南街道"},
+				{"station_town":"桐君街道"},
+				{"station_town":"旧县街道"},
+				{"station_town":"江南镇"},
+				{"station_town":"凤川街道"},
+				{"station_town":"新合乡"},
+				{"station_town":"富春江镇"},
+				{"station_town":"横村镇"},
+				{"station_town":"钟山乡"},
+				{"station_town":"莪山乡"},
+				{"station_town":"瑶琳镇"},
+				{"station_town":"分水镇"},
+				{"station_town":"合村乡"},
+				{"station_town":"百江镇"},]
+			});
+			
+            var grid = Ext.create('Ext.grid.Panel', {
+            renderTo: Ext.getBody(),
+            layout:'anchor',
+			anchor:'100% 100%',
+            store: store,
+			id:'gridshow',
+//             selModel: { selType: 'checkboxmodel' },   //选择框
+            columns: [{
+			xtype: 'rownumberer'
+		}, {
+			text:"告警id",
+			dataIndex:'warning_id',
+			width:0,
+// 			width:0
+		},{
+			text: "告警分类",
+			flex: 1,
+			sortable: true,
+			dataIndex: 'warning_type'
+		}, {
+			text: "乡镇名",
+			
+			sortable: true,
+			//renderer: Ext.util.Format.usMoney,
+			dataIndex: 'stationBasic.station_town'
+		}, {
+			text: "村名",
+			
+			sortable: true,
+			dataIndex: 'stationBasic.station_village'
+		},{
+			text: "站点名",
+			
+			sortable: true,
+			//renderer: Ext.util.Format.usMoney,
+			dataIndex: 'stationBasic.station_name'
+		},{
+			text: "告警级别",
+			
+			sortable: true,
+			//renderer: Ext.util.Format.usMoney,
+			dataIndex: 'warning_level'
+		},{
+			text: "告警内容",
+			flex: 1,
+			sortable: true,
+			//renderer: Ext.util.Format.usMoney,
+			dataIndex: 'warning_content'
+		},{
+			text: "是否处理",
+			
+			sortable: true,
+			//renderer: Ext.util.Format.usMoney,
+			dataIndex: 'warning_wetherDealed'
+		},{
+			text: "告警时间",			
+			sortable: true,
+			dataIndex: 'warning_time'
+		}],	
+            tbar : {
+		
+		xtype : "toolbar",
+		items : [ {
+			xtype:"combo",
+			fieldLabel: '告警分类',
+			labelAlign: "right",//拉近文字与下拉框的距离
+			store: store_warning_type,
+			queryMode: 'local',
+			displayField: 'warning_type',
+			width:260
+		},{
+			xtype:"combo",
+			fieldLabel: '乡镇',
+			labelWidth:30,
+			labelAlign: "right",
+			store: store_station_town,
+			queryMode: 'local',
+			displayField: 'station_town',
+			width:150
+		},{
+			xtype:"datefield",
+			fieldLabel: '截止日期',
+			labelAlign: "right",
+			labelWidth:60,
+			width:200,
+			value: new Date()
+		},{
+			xtype:"datefield",
+			fieldLabel: '---',
+			labelAlign: "right",
+			labelWidth:10,
+			width:200,
+			value: new Date()
+		},{
+			xtype : "button",
+			text : "查询",
+			icon:'../examples/layout-browser/images/page_attach.png',
+			listeners : {
+				//搜索功能               
+			}
+		},{
+			xtype : "button",
+			text : "导出异常数据基本情况汇总表",
+			icon:'../examples/layout-browser/images/page_attach.png',
+			listeners : {
+				//导出Excel              
+			}
+		}]
+	},        
+        });
+					//窗口
+					var window = Ext.create("Ext.window.Window", {
+
+						layout : 'anchor',
+						items : grid,
+						closable : false,
+						bbar : [ {
+							xtype : 'pagingtoolbar',
+							store : store,
+							displayMsg : '显示 {0} - {1} 条，共计 {2} 条',
+							emptyMsg : "没有数据",
+							beforePageText : "当前页",
+							afterPageText : "共{0}页",
+							displayInfo : true
+						} ]
+					});
+					window.show();
+					window.fitContainer();// 填充满浏览器 
+				});
+		function showAlert() {
+			var selectedData = grid.getSelectionModel().getSelection()[0].data;
+
+			Ext.MessageBox.alert("标题", selectedData.cataId);
+		}
+	</script>
+</html>

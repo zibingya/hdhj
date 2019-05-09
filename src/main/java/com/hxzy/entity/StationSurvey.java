@@ -74,7 +74,7 @@ public class StationSurvey implements Serializable{
 	
 	/**站点编号*/
 	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)//可选属性optional=false,表示stationbasic不能为空.删除survey不影响stationbasic
-	@JoinColumn(name="survey_station_no")//设置在stationsurvey表中的关联字段(外键)
+	//@JoinColumn(name="survey_station_no")//设置在stationsurvey表中的关联字段(外键)
 	private StationBasic stationBasic;
 	
 	/**其他*/
