@@ -1,6 +1,5 @@
 Ext.onReady(panelLayout);
 function panelLayout() {
-	var llqwidth = document.body.clientWidth-120-600;
 	// 新建tabpanel
 	var tab = Ext.create('Ext.TabPanel', {
 		region : 'center',// 区域
@@ -12,7 +11,7 @@ function panelLayout() {
 		enableTabScroll : true,
 		items : [{
 			title : '首页',
-			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./toobar.html"></iframe>'
+			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./api.html"></iframe>'
 		}]
 
 	});

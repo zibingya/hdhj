@@ -1,5 +1,5 @@
 Ext.onReady(function() {
-	Ext.tip.QuickTipManager.init();
+	//Ext.tip.QuickTipManager.init();
 	var itemsPerPage = 2;// 设置每页所需的项数
 	var store = Ext.create('Ext.data.Store', {
 		fields : [
