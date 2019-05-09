@@ -13,13 +13,13 @@ public interface StationSurveyDao extends JpaRepository<StationSurvey,Integer>{
 	 * 继承父类实现站点信息的增删改查
 	 * */
 	
-	@Query("from StationSurvey s where s.time in :times")
+	@Query("from com.hxzy.entity.StationSurvey s where s.time in :times")
 	public void delStationSurveyById(List<Integer> times);
 
-	@Query("from StationSurvey s where s.stationBasic.station_no =:station_no and s.time=:time")
+	@Query("from com.hxzy.entity.StationSurvey s where s.stationBasic.station_no =:station_no and s.time=:time")
 	public StationSurvey findOneStationSurvey(int station_no,int time);
 
-	@Query("from StationSurvey ssurvey where ssurvey.stationBasic.station_no =:station_no")
+	@Query("from com.hxzy.entity.StationSurvey ssurvey where ssurvey.stationBasic.station_no =:station_no")
 	public List<StationSurvey> findOneStationAllStationSurvey(int station_no);
 
 }

@@ -18,7 +18,7 @@ public class PatrolInspectionSheetServiceImpl implements PatrolInspectionSheetSe
 
 	@Transactional
 	@Override
-	public PatrolInspectionSheet findOnePatrolInspectionSheet(int station_no, int time) {
+	public PatrolInspectionSheet findOnePatrolInspectionSheet(int station_no,String time) {
 		// TODO Auto-generated method stub
 		return patrolInspectionSheetDao.findOnePIS(station_no, time);
 	}

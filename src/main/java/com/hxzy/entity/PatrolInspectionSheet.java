@@ -21,7 +21,7 @@ public class PatrolInspectionSheet implements Serializable{
 	
 	private static final long serialVersionUID = -4607709410619853314L;
 
-	/**填单时刻 */
+	/**填单id */
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int pis_id;

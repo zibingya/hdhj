@@ -24,9 +24,9 @@ public class StationBasic implements Serializable {
 
 	/**站点编号*/
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(nullable = false)
-	private int station_no;
+	@SequenceGenerator(initialValue = 1, name = "suq_station", sequenceName = "seq_station_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suq_station")
+    private int station_no;
 
 	/**站点类型*/
 	@Column(length = 50, nullable = true)
@@ -53,10 +53,12 @@ public class StationBasic implements Serializable {
 	private String station_village;
 
 	/**经度*/
-	private int station_longitude;
+	@Column(name="station_longitude",precision=13, scale=10) 
+	private double station_longitude;
 	
 	/**纬度*/
-	private int station_latitude;
+	@Column(name="station_latitude",precision=13, scale=10) 
+	private double station_latitude;
 
 	/** 站点描述*/
 	@Column(length = 100, nullable = true)
@@ -88,7 +90,7 @@ public class StationBasic implements Serializable {
 	 * stationsurvey(站点检测表集合)*/
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "survey_station_no", referencedColumnName = "station_no")
-	private Set<StationSurvey> surveySet = new HashSet<StationSurvey>();
+    private Set<StationSurvey> surveySet = new HashSet<StationSurvey>();
 
 	/**
 	 * PatrolInspectionSheet(巡检工单表)集合*/
@@ -164,19 +166,19 @@ public class StationBasic implements Serializable {
 		this.station_village = station_village;
 	}
 
-	public int getStation_longitude() {
+	public double getStation_longitude() {
 		return station_longitude;
 	}
 
-	public void setStation_longitude(int station_longitude) {
+	public void setStation_longitude(double station_longitude) {
 		this.station_longitude = station_longitude;
 	}
 
-	public int getStation_latitude() {
+	public double getStation_latitude() {
 		return station_latitude;
 	}
 
-	public void setStation_latitude(int station_latitude) {
+	public void setStation_latitude(double station_latitude) {
 		this.station_latitude = station_latitude;
 	}
 

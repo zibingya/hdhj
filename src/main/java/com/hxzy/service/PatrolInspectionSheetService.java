@@ -4,5 +4,5 @@ import com.hxzy.entity.PatrolInspectionSheet;
 
 public interface PatrolInspectionSheetService {
 
-	public PatrolInspectionSheet findOnePatrolInspectionSheet(int station_no,int time);
+	public PatrolInspectionSheet findOnePatrolInspectionSheet(int station_no,String day);
 }

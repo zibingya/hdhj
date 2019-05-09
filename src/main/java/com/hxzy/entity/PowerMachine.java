@@ -24,6 +24,9 @@ public class PowerMachine implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int pm_id;// 源设备地址
+	
+	@Column(nullable = true)
+	private int pm_time;// 当前时间精确到小时
 
 	@Column(length = 50, nullable = true)
 	private String pm_address;// 寄存器地址
@@ -35,7 +38,7 @@ public class PowerMachine implements Serializable{
 	
 	/**pm_station_no外键关联站点名station_no*/
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},optional=false)//删除该表不影响是stationbasic
-	@JoinColumn(name="pm_station_no", referencedColumnName = "station_no")
+	@JoinColumn(name="pm_station_no")
 	private StationBasic stationBasic;
 	
 	@Column(length = 50, nullable = true)
@@ -51,6 +54,18 @@ public class PowerMachine implements Serializable{
 
 	public String getPm_address() {
 		return pm_address;
+	}
+
+	public int getPm_time() {
+		return pm_time;
+	}
+
+	public void setPm_time(int pm_time) {
+		this.pm_time = pm_time;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public void setPm_address(String pm_address) {

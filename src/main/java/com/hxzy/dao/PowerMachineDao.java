@@ -10,6 +10,6 @@ public interface PowerMachineDao extends JpaRepository<PowerMachine, Integer>{
 	/**
 	 * 继承jparespository实现powermachine的增删改查
 	 * */
-	@Query("from PowerMachine pm,StationBasic s where s.station_no = :station_no and pm.stationBasic.station_no = s.station_no and pm.id = :id")
-	public PowerMachine finOnePowerMachine(int station_no,int id);
+	@Query("from com.hxzy.entity.PowerMachine pm where pm.stationBasic.station_no = :station_no and pm.pm_time =:time")
+	public PowerMachine finOnePowerMachine(int station_no,int time);
 }

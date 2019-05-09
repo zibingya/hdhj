@@ -44,6 +44,8 @@ public class AttendanceRecord implements Serializable{
 
 	/** 是否有效 */
 	private boolean ar_wethervalid;
+	
+	private String ar_ename;
 
 	/** 站点编号 */
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, optional = false) 
@@ -72,6 +74,18 @@ public class AttendanceRecord implements Serializable{
 
 	public void setAr_arrivingtime(int ar_arrivingtime) {
 		this.ar_arrivingtime = ar_arrivingtime;
+	}
+
+	public String getAr_ename() {
+		return ar_ename;
+	}
+
+	public void setAr_ename(String ar_ename) {
+		this.ar_ename = ar_ename;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public int getAr_leavingtime() {

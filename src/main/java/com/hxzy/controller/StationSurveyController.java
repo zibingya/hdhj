@@ -15,6 +15,9 @@ import com.hxzy.entity.StationBasic;
 import com.hxzy.entity.StationSurvey;
 import com.hxzy.service.StationSurveyService;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 @RestController
 public class StationSurveyController {
 	/**
@@ -31,43 +34,42 @@ public class StationSurveyController {
 	/**
 	 * 每隔一个小时要存入一次站点检测表
 	 * */
-	@GetMapping("/addstationsurvey")
-	public ModelAndView addStationSurvey(@ModelAttribute StationSurvey stationSurvey,ModelAndView mav) {
-		mav.setViewName("redirect:/stationsurvey");
-		stationSurveyService.addStationSurvey(stationSurvey);//存入最新监测信息
-		return mav;
-	}
+	
 	
 	/**
 	 * @admin
 	 * 批量删除
 	 * */
-	@GetMapping("/delstationsurvey")
-	public ModelAndView delStationSurvey(@ModelAttribute List<Integer> times,ModelAndView mav) {
-		mav.setViewName("redirect:/stationsurvey");
-		stationSurveyService.delStationSurvey(times);//dba批量删除监测信息
-		return mav;
-	}
+	
 	
 	/**
 	 * 由站点编号和当前时间查出实时监测表
 	 * */
 	@GetMapping("/getonestationsurvey/{time}")
-	public ModelAndView findOneStationSurvey(@ModelAttribute StationBasic stationBasic,@PathVariable(name="time",required=true) int time,ModelAndView mav) {
-		mav.addObject("stationSurvey", stationSurveyService.findOneStationSurvey(stationBasic.getStation_no(),time));//查出该站点该时刻的监测信息
-		mav.setViewName("/stationsurvey");
-		return mav;
+	public String findOneStationSurvey(@PathVariable(name="time",required=true) String time) {
+		JSONObject stationSurveyJSON = null;
+		StationSurvey stationSUrvey = stationSurveyService.findOneStationSurvey(MapController.station_id, Integer.parseInt(time));
+		System.out.println("gz:"+MapController.station_id);
+		try {
+			stationSUrvey.setStationBasic(null);
+			stationSurveyJSON = JSONObject.fromObject(stationSUrvey); 
+		}catch(Exception e) {
+			System.out.println("aaa1");
+		}
+		return stationSurveyJSON.toString();
 	}
 	
 	/**
 	 * 由站点编号查出该站点所有监测表
 	 * */
 	@GetMapping("/getonestationsurvey/list")
-	public ModelAndView getOneStationAllSurvey(@ModelAttribute HttpSession session,ModelAndView mav) {
-		StationBasic stationBasic = (StationBasic) session.getAttribute("stationBasic");
-		mav.addObject("stationSurvey", stationSurveyService.findAllStationSurvey(stationBasic.getStation_no()));//查出该站点历史监测信息而后在页面组合成不同报表
-		mav.setViewName("rediret:stationsurvey");
-		return mav;
+	public String getOneStationAllSurvey() {
+		List<StationSurvey> surveyList = stationSurveyService.findAllStationSurvey(MapController.station_id);
+		for(StationSurvey ss: surveyList) {
+			ss.setStationBasic(null);
+		}
+		JSONArray surveyJSON = JSONArray.fromObject(surveyList);
+		return surveyJSON.toString();
 	}
 	
 }

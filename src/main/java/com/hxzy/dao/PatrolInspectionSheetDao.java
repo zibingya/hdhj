@@ -10,6 +10,6 @@ import com.hxzy.entity.PatrolInspectionSheet;
  * */
 public interface PatrolInspectionSheetDao extends JpaRepository<PatrolInspectionSheet,Integer>{
 	
-	@Query("from PatrolInspectionSheet pis where pis_station_no = :station_no and time = :time")
-	public PatrolInspectionSheet findOnePIS(int station_no,int time);
+	@Query("from com.hxzy.entity.PatrolInspectionSheet pis where pis_station_no = :station_no and pis_time = :time")
+	public PatrolInspectionSheet findOnePIS(int station_no,String time);
 }

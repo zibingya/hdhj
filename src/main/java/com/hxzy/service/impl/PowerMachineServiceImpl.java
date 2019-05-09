@@ -18,25 +18,12 @@ public class PowerMachineServiceImpl implements PowerMachineService{
 	@Resource(name="powerMachineDao")
 	private PowerMachineDao powerMachineDao;
 
-	@Transactional
-	@Override
-	public void addPowerMachine(PowerMachine powerMachine) {
-		// TODO Auto-generated method stub
-		powerMachineDao.save(powerMachine);
-	}
- 
-	@Transactional
-	@Override
-	public void delPowerMachine(int time) {
-		// TODO Auto-generated method stub
-		powerMachineDao.deleteById(time);
-	}
 
 	@Transactional
 	@Override
-	public PowerMachine findOnePowerMachine(int station_no,int pm_id) {
+	public PowerMachine findOnePowerMachine(int station_no,int time) {
 		// TODO Auto-generated method stub
-		return powerMachineDao.finOnePowerMachine(station_no, pm_id);
+		return powerMachineDao.finOnePowerMachine(station_no,time);
 	}
 
 }
