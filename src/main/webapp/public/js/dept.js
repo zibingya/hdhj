@@ -5,7 +5,7 @@ Ext.onReady(function() {
 		fields : ['dname', 'deptno', 'ddescription','dstate','dtime','dceater', 'dchangetime', 'dchanger'],
   		pageSize : itemsPerPage, // 页容量数据
 		// 是否在服务端排序 （true的话，在客户端就不能排序）
-		remoteSort : false,
+		remoteSort : true,
 		remoteFilter : true,
 		proxy : {
 			type : 'ajax',
@@ -16,13 +16,7 @@ Ext.onReady(function() {
 				totalProperty: 'totalElements' //数据总条数
 			}
 		},
-		/*sorters : [{
-			// 排序字段。
-			property : 'ordeId',
-			// 排序类型，默认为 ASC
-			direction : 'desc'
-		}],
-		 listeners : {
+		/*listeners : {
                 'load' : function(store, records, options) {                
                     grid.getSelectionModel().deselectAll();
                     grid.getSelectionModel().select(0);
@@ -33,7 +27,7 @@ Ext.onReady(function() {
 	store.load({
 		params : {
 			start : 0,
-			limit : 4
+			limit : itemsPerPage
 		}
 	});
 
@@ -124,7 +118,6 @@ Ext.onReady(function() {
 						Ext.getCmp('d_dstate').setValue(model.get('dstate'));
 						Ext.getCmp('d_dtime').setValue(model.get('dtime'));
 						Ext.getCmp('d_dceater').setValue(model.get('dceater'));
-						Ext.getCmp('d_dchangetime').setValue(model.get('dchangetime'));
 						Ext.getCmp('d_dchanger').setValue(model.get('dchanger'));
 					}
 				}
@@ -224,16 +217,22 @@ Ext.onReady(function() {
 							name : "dstate",
 							fieldLabel : "部门状态"
 						}, {
-							xtype : "textfield",
+							xtype : "datefield",
+							format : 'Y-m-d',
 							name : "dtime",
+							value:new Date(),
+							disabled : true,
 							fieldLabel : "创建时间"
 						}, {
 							xtype : "textfield",
 							name : "dceater",
 							fieldLabel : "创建者"
 						}, {
-							xtype : "textfield",
+							xtype : "datefield",
+							format : 'Y-m-d',
+							value:new Date(),
 							name : "dchangetime",
+							disabled : true,
 							fieldLabel : "修改时间"
 						}, {
 							xtype : "textfield",
@@ -257,9 +256,9 @@ Ext.onReady(function() {
 										'dname' : form.findField("dname").getValue(),
 										'ddescription' : form.findField("ddescription").getValue(),
 										'dstate' : form.findField("dstate").getValue(),
-										'dtime' : form.findField("dtime").getValue(),
+										'dtime' : Ext.util.Format.date(form.findField("dtime").getValue(), 'Y-m-d'),
 										'dceater' : form.findField("dceater").getValue(),
-										'dchangetime' : form.findField("dchangetime").getValue(),
+										'dchangetime' : Ext.util.Format.date(form.findField("dchangetime").getValue(), 'Y-m-d'),
 										'dchanger' : form.findField("dchanger").getValue()
 									},
 									dataType : 'text',
@@ -267,6 +266,7 @@ Ext.onReady(function() {
 										var val = response.responseText
 										if (val == 'Y') {
 											Ext.example.msg('成功', '添加成功！', true);
+											form.reset();
 											var grid = Ext.getCmp('showgrid');//通过grid的id取到grid
     										grid.store.reload();//刷新数据，也就是向后台请求数据再加载出来
 											addWindow.close();
@@ -311,6 +311,7 @@ Ext.onReady(function() {
 			xtype : "textfield",
 			name : "dtime",
 			id:"d_dtime",
+			disabled : true,
 			fieldLabel : "创建时间"
 		}, {
 			xtype : "textfield",
@@ -318,9 +319,11 @@ Ext.onReady(function() {
 			id:"d_dceater",
 			fieldLabel : "创建者"
 		}, {
-			xtype : "textfield",
+			xtype : "datefield",
+			format : 'Y-m-d',
+			value:new Date(),
 			name : "dchangetime",
-			id:"d_dchangetime",
+			disabled : true,
 			fieldLabel : "修改时间"
 		}, {
 			xtype : "textfield",

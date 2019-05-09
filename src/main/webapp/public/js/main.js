@@ -1,5 +1,6 @@
 Ext.onReady(panelLayout);
 function panelLayout() {
+	var llqwidth = document.body.clientWidth-120-600;
 	// 新建tabpanel
 	var tab = Ext.create('Ext.TabPanel', {
 		region : 'center',// 区域
@@ -20,38 +21,40 @@ function panelLayout() {
 			region : 'north',// 北，头部
 			minHeight : 80,// 最小的高度
 			region : 'north', // 北(上)
-			html : '<div class="img-top"><h1 style="font-size:50px;line-height: 10px;">环境治理设施智能管理软件</h1></div>',
+			//html : '<div class="img-top"><h1 style="font-size:50px;line-height: 10px;">环境治理设施智能管理软件</h1></div>',
 			border : false, // 是否显示边框 默认是true(显示)
 			bodyStyle : {
-				// background: '#ffc',  
 				background : 'url(./public/image/img-top.jpg)',
 				padding : '5px'
-			}
-			/*items : [{
+			},
+			layout: "column",
+			items : [{
 				xtype : "box",
-				//width:600,
 				html : '<div class="img-top"><h1 style="font-size:50px;line-height: 10px;">环境治理设施智能管理软件</h1></div>'
 			}, {
 				xtype : "splitbutton",
 				cls : "main-btn",
-				iconCls : "x-btn-user",
+				icon : '../public/image/user.png',
+				//x:llqwidth,
+				y:25,
 				minWidth : 104,
 				enabelToggle : true,
 				pressed : true,
 				text : "Neo",
 				menu : new Ext.menu.Menu({
-							items : [{
-										text : "修改密码",
-										iconCls : "x-btn-lock"
-									}, {
-										text : "退出系统",
-										iconCls : "x-btn-exit",
-										handler : function() {
-											window.location.href = "index.html";
-										}
-									}]
-						})
-			}]*/
+					items : [{
+						text : "修改密码",
+						icon : '../public/image/password.png'
+					}, {
+						text : "退出系统",
+						icon : '../public/image/exit.png',
+						iconCls : "x-btn-exit",
+						handler : function() {
+							window.location.href = "index.html";
+						}
+					}]
+				})
+			}]
 		}, {
 			title : 'West Region is collapsible',// 标题
 			region : 'west',// 区域，西区
@@ -310,18 +313,14 @@ function panelLayout() {
 								id : 'root',
 								// autoShow:true,
 								children : [{
-											text : '巡维人员',
-											leaf : true,
-											id : 'employee'
-										}, {
-											text : '管理人员',
-											leaf : true,
-											id : 'employee2'
-										}]
-							}, {
-								text : '流量告警设置',
-								leaf : true,
-								id : '#3'
+									text : '巡维人员',
+									leaf : true,
+									id : 'employee'
+								}, {
+									text : '管理人员',
+									leaf : true,
+									id : 'employee2'
+								}]
 							}]
 				},
 				listeners : {

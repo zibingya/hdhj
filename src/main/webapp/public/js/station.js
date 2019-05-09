@@ -201,7 +201,7 @@ Ext.onReady(function() {
 			buttonText: '选择图片',
 			id: 'upFile',
 			name : "upFile",
-			fieldLabel : "图片地址："
+			fieldLabel : "图片地址"
 		}, {
 			xtype : "textfield",
 			name : "station_name",

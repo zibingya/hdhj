@@ -54,7 +54,7 @@ public class DeptServiceImpl implements DeptService {
 		// TODO Auto-generated method stub
 		Sort sort = new Sort(Sort.Direction.ASC,"deptno");
 		Pageable pageable = new PageRequest(page, size,sort);
-		Page<Dept> depts = deptDao.findAll(pageable);
+		Page<Dept> depts = deptDao.findInOrders(pageable);
 		
 		return depts;
 	}
