@@ -9,26 +9,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+
+
+
 import com.hxzy.dao.StationBasicDao;
 import com.hxzy.entity.StationBasic;
 import com.hxzy.service.StationBasicService;
 
+
 @Component("stationBasicServiceImpl")
 public class StationBasicServiceImpl implements StationBasicService {
-	//与dao层的连接
-	private StationBasicDao stationBasicDao;
-
 	//通过spring控制生命周期
 	@Resource
-	public void setStationBasicDao(StationBasicDao stationBasicDao) {
-		this.stationBasicDao = stationBasicDao;
-	}
+	private StationBasicDao stationBasicDao;
+	
 
-	@Override
-	public List<StationBasic> getStationBasicList() {
-		// TODO Auto-generated method stub
-		return stationBasicDao.findAll();
-	}
 
 	@Override
 	public StationBasic addStationBasic(StationBasic stationBasic) {
@@ -59,8 +54,22 @@ public class StationBasicServiceImpl implements StationBasicService {
 		return stations;
 	}
 	
+	@Override
 	public StationBasic findOne(String station_kind) {
 		// TODO Auto-generated method stub
 		return stationBasicDao.findOne(station_kind);
 	}
+
+	@Override
+	public List<StationBasic> getStationBasicList() {
+		// TODO Auto-generated method stub
+		return stationBasicDao.findAll();
+	}
+
+	@Override
+	public StationBasic findStationBasic(int station_no) {
+		// TODO Auto-generated method stub
+		return stationBasicDao.finOne(station_no);
+	}
+
 }

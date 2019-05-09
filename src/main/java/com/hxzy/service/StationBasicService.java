@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 
 import com.hxzy.entity.StationBasic;
 
+import net.sf.json.JSONObject;
+
 /**
  * 站点信息服务接口
  * */
@@ -22,4 +24,6 @@ public interface StationBasicService {
 	public Page<StationBasic> fy(int page, int size);
 	//hzl 按照类型查站点
 	public StationBasic findOne(String station_kind);
+	
+	public StationBasic findStationBasic(int station_no);
 }

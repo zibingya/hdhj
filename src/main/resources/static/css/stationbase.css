@@ -1,0 +1,108 @@
+   a{ 
+      text-decoration:none;
+      color:skyblue;
+      font-size:15px;
+   }
+   table{
+      border-right:1px solid green;
+      border-bottom:1px solid green;
+   } 
+   table td{
+      border-left:1px solid green;
+      border-top:1px solid green;
+   }
+   .surveytitle{
+     
+      font-weight:bold;
+      border-left:1px solid green;
+      border-right:1px solid green;
+      width:99.3%;
+  
+   }
+   .survey_cod,.survey_nh3n,.survey_ph,.survey_totalp,.survey_watertemperature,.survey_airtemperature,.survey_instantspeed,.survey_flowmeterReading,.survey_totalflowtoday,.survey_totalflowyesterday{
+      display:inline-block;
+      width:32.99%;
+      border-top:1px solid green;
+      border-left:1px solid green;
+      float:left;
+   }
+   .black{
+      opacity:0;
+   }
+    #stationitem{
+      display:inline-block;
+   }
+   .artitle{
+			display: inline-block;
+		}
+   .pis,.pis1{
+ 			display: inline-block;
+ 			float:left;
+ 			border-left:1px solid green;
+            border-top:1px solid green;
+ 		}
+ 	.pis{
+ 			width:8%;
+ 			text-align: center;
+ 		}
+ 	.pis1{
+ 			width:11%;
+ 			height:35px;
+ 			text-align: center;
+ 		}
+ 	.pistitle{
+ 			text-align: center;
+ 			font-weight: bold;
+ 		}
+ 	.pissheet{
+ 			text-align: center;
+ 		}
+ 	#pistitle1,#pistitle2{
+ 			border-left:1px solid green;
+            border-top:1px solid green;
+            border-right: 1px solid green;
+ 		}
+ 	#pistitle2{
+ 			border-bottom: 1px solid green;
+ 		}
+ 	#pis2{
+ 			border-bottom: 1px solid green;
+ 		}
+ 	#pis3,#pis4{
+ 			border-right: 1px solid green;
+ 		}
+ 	#pis4{
+ 			border-bottom: 1px solid green;
+ 		}
+   #waterquality{
+      display:inline-block;  
+      width:30%;
+      margin:0 10px 1px 0; 
+      vertical-align:top;
+      border-top:1px solid green;
+      border-bottom:1px solid green;
+   } 
+   #waterquality img{
+      width:20px;
+      height:15px;
+   }
+   #surveytitle1{
+      font-weight:bold;
+      border-left:1px solid green;
+      border-right:1px solid green;
+      width:99.3%;
+   }
+   #survey_watertemperature{
+     border-bottom:1px solid green;
+   }
+   #survey_instantspeed{
+     line-height:25px;
+   }
+   #updatetime{
+     font-weight:normal;
+     color:black;
+   }
+   #table{
+      border-right:1px solid green;
+      border-left:1px solid green;
+   }

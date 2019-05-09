@@ -1,5 +1,7 @@
 package com.hxzy.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -16,13 +17,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Patrol_Inspection_Sheet")
-public class PatrolInspectionSheet {
+public class PatrolInspectionSheet implements Serializable{
+	
+	private static final long serialVersionUID = -4607709410619853314L;
+
+	/**填单id */
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private int pis_id;
 	
 	/**填单时刻 */
-	@Id
-	@SequenceGenerator(initialValue = 1, name = "suq_patrolInspection", sequenceName = "seq_patrolInspection_id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "suq_patrolInspection")
-	private int pis_time;
+	@Column(length=50,nullable=true)
+	private String pis_time;
 	
 	/**工程是否无进水或无出水,正常1,无0 */
 	private int pis_wetherintakeoreffluent;
@@ -112,14 +118,6 @@ public class PatrolInspectionSheet {
 	
 	/**整改时限date*/
 	private int pis_deadline;
-
-	public int getPis_time() {
-		return pis_time;
-	}
-
-	public void setPis_time(int pis_time) {
-		this.pis_time = pis_time;
-	}
 
 	public int getPis_wetherintakeoreffluent() {
 		return pis_wetherintakeoreffluent;
@@ -343,6 +341,22 @@ public class PatrolInspectionSheet {
 
 	public void setPis_deadline(int pis_deadline) {
 		this.pis_deadline = pis_deadline;
+	}
+
+	public int getPis_id() {
+		return pis_id;
+	}
+
+	public void setPis_id(int pis_id) {
+		this.pis_id = pis_id;
+	}
+
+	public String getPis_time() {
+		return pis_time;
+	}
+
+	public void setPis_time(String pis_time) {
+		this.pis_time = pis_time;
 	}
 
 }

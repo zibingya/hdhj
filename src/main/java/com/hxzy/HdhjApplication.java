@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HdhjApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HdhjApplication.class, args);
+		SpringApplication.run(HdhjApplication.class, args); 
 	}
 }

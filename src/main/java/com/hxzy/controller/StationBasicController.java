@@ -1,6 +1,5 @@
 package com.hxzy.controller;
 
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,35 +25,21 @@ import com.hxzy.service.StationBasicService;
 
 import net.sf.json.JSONObject;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-import net.sf.json.util.CycleDetectionStrategy;
 
 
 
 
 @RestController
 public class StationBasicController {
-	private StationBasicService stationBasicService;
-
 	@Resource(name="stationBasicServiceImpl")
-	public void setStationBasicService(StationBasicService stationBasicService) {
-		this.stationBasicService = stationBasicService;
-	}
+	private StationBasicService stationBasicService;
 	
 	@GetMapping("/stationbasic")
 
 	public String getStationBasics(@RequestParam("page") int page, @RequestParam("limit") int limit) {
 		Page<StationBasic> stations = stationBasicService.fy(page-1, limit);
 		JSONObject obj = JSONObject.fromObject(stations);
-//=======
-//	public String getStationBasics() {
-//		JsonConfig jsonConfig = new JsonConfig();  
-//		jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);  
-//		List<StationBasic> stationBasics = stationBasicService.getStationBasicList();
-//		JSONArray obj = JSONArray.fromObject(stationBasics,jsonConfig); 
-//		System.out.println(obj.toString());
-//>>>>>>> refs/heads/hzl
+
 		return obj.toString();	
 	}
 	
@@ -123,3 +108,4 @@ public class StationBasicController {
 	}
 	
 }
+

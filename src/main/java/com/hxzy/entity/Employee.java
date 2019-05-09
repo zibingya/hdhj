@@ -56,6 +56,7 @@ public class Employee implements Serializable {
 	
 	@OneToMany(cascade= CascadeType.REFRESH,fetch=FetchType.LAZY)
 	//@JoinColumn(name="ar_ename",referencedColumnName="Ename")
+	@JoinColumn(name="ar_Eid",referencedColumnName="Eid")
 	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public String getEname() {
