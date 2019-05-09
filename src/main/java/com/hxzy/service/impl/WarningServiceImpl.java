@@ -25,12 +25,17 @@ public class WarningServiceImpl implements WarningService{
 	@Override
 	public List<Warning> getWarningList() {
 		// TODO Auto-generated method stub
-		Warning w = new Warning();
-		Set<StationBasic> set = new HashSet<StationBasic>();
-		StationBasic sb = new StationBasic();
-		sb.setStation_name("sb");
-		set.add(sb);
-		
 		return warningDao.findAll();
+	}
+	@Override
+	public void deleteWarningList(Warning warning) {
+		// TODO Auto-generated method stub
+		warningDao.delete(warning);
+	}
+
+	@Override
+	public void updateinfo(Warning warning) {
+		// TODO Auto-generated method stub
+		warningDao.updateinfo(warning.getWarning_id());
 	}	
 }

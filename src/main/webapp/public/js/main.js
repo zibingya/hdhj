@@ -11,7 +11,7 @@ function panelLayout() {
 		enableTabScroll : true,
 		items : {
 			title : '首页',
-			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./toobar.html"></iframe>'
+			html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./attendance.html"></iframe>'
 		}
 	});
 	var viewPort = Ext.create('Ext.Viewport', {
@@ -24,7 +24,11 @@ function panelLayout() {
 			border : false, // 是否显示边框 默认是true(显示)
 			bodyStyle : {
 				// background: '#ffc',  
+
 				background : 'url(../public/image/img-top.jpg)',
+
+				background : 'url(./public/image/img-top.jpg)',
+
 				padding : '10px'
 			}
 		}, {
@@ -231,7 +235,7 @@ function panelLayout() {
 					autoShow : true,
 					children : [{
 								text : '告警列表',
-								id : '#1',// 这个id用来与下方的监听是否存在，如果存在就不打开
+								id : 'toobar',// 这个id用来与下方的监听是否存在，如果存在就不打开
 								leaf : true
 							}, {
 								text : '异常数据汇总表',
@@ -251,7 +255,7 @@ function panelLayout() {
 								'id' : r.raw.id,
 								'title' : r.raw.text,
 								closable : true, // 通过html载入目标页
-								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./index/tree2.html"></iframe>'
+								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./'+r.raw.id+'.html"></iframe>'
 							});
 						}
 						tab.setActiveTab(n);
@@ -276,7 +280,7 @@ function panelLayout() {
 					autoShow : true,
 					children : [{
 								text : '站点管理',
-								id : '#1',// 这个id用来与下方的监听是否存在，如果存在就不打开
+								id : 'station',// 这个id用来与下方的监听是否存在，如果存在就不打开
 								expanded : true,// 此处展开所有。
 								leaf : true
 							}, {
@@ -312,7 +316,7 @@ function panelLayout() {
 								'title' : r.raw.text,
 								closable : true,
 								// 通过html载入目标页
-								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./grid3.html"></iframe>'
+								html : '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="./'+r.raw.id+'.html"></iframe>'
 							});
 						}
 						tab.setActiveTab(n);

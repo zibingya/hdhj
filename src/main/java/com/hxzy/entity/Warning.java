@@ -1,7 +1,9 @@
 package com.hxzy.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,8 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /***
  * 	告警列表
@@ -42,14 +48,7 @@ public class Warning implements Serializable{
 	 * *告警分类
 	 */
 	@Column(length = 50,nullable = true)
-	private String warning_type;
-	
-	/**
-	 * *站点名称
-	 * warning_station_no外键关联站点编号station_no
-	 */
-	@OneToMany(mappedBy="StationBasic")
-	private Set<StationBasic> sbSet = new HashSet<StationBasic>();
+	private  String warning_type;
 	
 	/**
 	 * *告警级别
@@ -110,6 +109,12 @@ public class Warning implements Serializable{
 	 */
 	@Column(length = 50,nullable = false)
 	private String warning_other;
+	
+	/**
+	 * *拥有的站点
+	 */
+	@OneToOne(cascade=CascadeType.DETACH)//如果你要删除一个实体，但是它有外键无法删除，你就需要这个级联权限了。它会撤销所有相关的外键关联。
+	private StationBasic stationBasic;
 
 	public int getWarning_id() {
 		return Warning_id;
@@ -125,14 +130,14 @@ public class Warning implements Serializable{
 
 	public void setWarning_type(String warning_type) {
 		this.warning_type = warning_type;
+	}	
+
+	public StationBasic getStationBasic() {
+		return stationBasic;
 	}
 
-	public Set<StationBasic> getSbSet() {
-		return sbSet;
-	}
-
-	public void setSbSet(Set<StationBasic> sbSet) {
-		this.sbSet = sbSet;
+	public void setStationBasic(StationBasic stationBasic) {
+		this.stationBasic = stationBasic;
 	}
 
 	public String getWarning_level() {
@@ -213,5 +218,54 @@ public class Warning implements Serializable{
 
 	public void setWarning_other(String warning_other) {
 		this.warning_other = warning_other;
+	}
+	
+
+
+	public List<String> getNames() {
+		return names;
+	}
+
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	public List<String> getTownnames() {
+		return townnames;
+	}
+
+	public void setTownnames(List<String> townnames) {
+		this.townnames = townnames;
+	}
+
+	public List<String> getVillagenames() {
+		return villagenames;
+	}
+
+	public void setVillagenames(List<String> villagenames) {
+		this.villagenames = villagenames;
+	}
+
+
+
+	/**
+	 * 不需要与数据库关联的字段
+	 * */
+
+	@Transient 
+	private List<String> names = new ArrayList<String>();
+	@Transient
+	private List<String> townnames = new ArrayList<String>();
+	@Transient
+	private List<String> villagenames = new ArrayList<String>();
+	@Transient
+	private List<StationBasic> stations = new ArrayList<StationBasic>();
+
+	public List<StationBasic> getStations() {
+		return stations;
+	}
+
+	public void setStations(List<StationBasic> stations) {
+		this.stations = stations;
 	}
 }

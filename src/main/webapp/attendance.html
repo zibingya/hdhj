@@ -1,0 +1,420 @@
+<html>
+<head>
+
+	<meta charset="utf-8"/>
+	<title>tabpanel</title>
+	<script type="text/javascript" src="./public/ext-4.2.1/ext-all.js"></script>
+<script type="text/javascript" src="./public/ext-4.2.1/locale/ext-lang-zh_CN.js"></script>
+<link href="./public/ext-4.2.1/resources/ext-theme-neptune/ext-theme-neptune-all.css"
+	rel="stylesheet" />
+	</head>
+	<body>
+	</body>
+	<style>
+		
+	</style>
+	<script>
+Ext.onReady(function () {       	 
+	var itemsPerPage = 2;// 设置每页所需的项数
+    var store = Ext.create('Ext.data.Store', {
+        fields: ['attendanceLaw_id',
+                'AL_validTime', 
+                'AL_period', 
+                'AL_times',
+                'AL_validStartTime','AL_validEndTime',
+                'stationBasic.station_kind'],	
+        pageSize: itemsPerPage,  //页容量数据
+        //是否在服务端排序 （true的话，在客户端就不能排序）
+        remoteSort: false,
+        remoteFilter: true,
+        proxy: {
+          type: 'ajax',
+          url:"/selectAttendanceLaw",
+          reader: {   //这里的reader为数据存储组织的地方
+          	type: 'json', //返回数据类型为json格式
+//          root: 'stationbasic'//根节点
+            //totalProperty: 'total' //数据总条数
+            }
+         },
+          sorters: [{
+            //排序字段。
+            property: 'ordeId',
+            //排序类型，默认为 ASC 
+            direction: 'desc'
+          }],
+          autoLoad: true  //即时加载数据
+});
+		store.load({
+			params: {
+				start: 0,
+				limit: itemsPerPage
+			}
+		});
+			
+            var grid = Ext.create('Ext.grid.Panel', {
+            renderTo: Ext.getBody(),
+            layout:'anchor',
+			anchor:'100% 100%',
+            store: store,
+			id:'gridshow',
+            selModel: { selType: 'checkboxmodel' },   //选择框
+            columns: [{
+			xtype: 'rownumberer'
+		}, {
+			text:"考勤id",
+			dataIndex:'attendanceLaw_id',
+// 			width:0
+		},{
+			text: "站点类型",
+			width:150,
+			sortable: true,
+			dataIndex: 'stationBasic.station_kind'
+		}, {
+			text: "有效时长（分钟）",
+			
+			sortable: true,
+			width:150,
+			dataIndex: 'AL_validTime'
+		}, {
+			text: "周期",
+			
+			sortable: true,
+			width:100,
+			dataIndex: 'AL_period'
+		},{
+			text: "次数",
+			
+			sortable: true,
+			width:100,
+			dataIndex: 'AL_times'
+		},{
+			text: "规则有效期间_开始",
+			
+			sortable: true,
+			width:150,
+			dataIndex: 'AL_validStartTime',
+			format:'Y-m-d'
+		},{
+			text: "规则有效期间_结束",
+			flex: 1,
+			sortable: true,
+			dataIndex: 'AL_validEndTime',
+			format:'Y-m-d'
+		}],	
+            tbar : {
+		
+		xtype : "toolbar",
+		items : [ {
+			xtype : "button",
+			text : "添加",
+			icon:'../examples/layout-browser/images/page_attach.png',
+			listeners : {
+				"click" : function(btn) {
+					addWindow.show();
+				}
+			}
+		},{
+			xtype : "button",
+			text : "修改",
+			icon:'../examples/layout-browser/images/page_attach.png',
+			listeners : {
+				"click" : function() {					
+					var grid = window.down("grid");
+					var records = grid.getSelectionModel().getSelection();
+					var model = records[0];//得到被选中的第一行
+					if(records.length == ""){
+						Ext.Msg.show({
+							title: '操作提示',
+							msg: '您没有选择需要修改的行，请选择后重试！！',
+							buttons: Ext.MessageBox.OK,
+							icon: Ext.MessageBox.ERROR
+						});
+						return;
+					}
+					
+					alert(model.get('AL_validTime'));
+					
+					updateWindow.show();
+					Ext.getCmp('AttendanceLaw_id').setValue(model.get('attendanceLaw_id'));
+					Ext.getCmp('AL_kind').setValue(model.get('stationBasic.station_kind')); //赋值操作
+					Ext.getCmp('ALvalidTime').setValue(model.get('AL_validTime'));
+					Ext.getCmp('ALperiod').setValue(model.get('AL_period'));
+					Ext.getCmp('ALtimes').setValue(model.get('AL_times'));
+					Ext.getCmp('ALvalidStartTime').setValue(model.get('AL_validStartTime'));
+					Ext.getCmp('ALvalidEndTime').setValue(model.get('AL_validEndTime'));
+				}
+			}
+		},{
+			xtype : "button",
+			text : "删除",
+			icon:'../examples/layout-browser/images/page_attach.png',
+			listeners : {
+				"click" : function(btn) {
+					var grid = window.down("grid");
+					var records = grid.getSelectionModel().getSelection();
+					if(records == 0){
+						Ext.Msg.show({
+							title:'提示',
+							msg:'请选择！',
+							buttons:Ext.MessageBox.OK,
+							icon:Ext.MessageBox.ERROR
+						});
+						return;
+					}else{
+						Ext.MessageBox.confirm("确认","是否删除该考勤规则",function(btn){
+							if(btn=="yes"){
+								for(var i = 0;i<records.length;i++){
+									var model = records[i];
+									Ext.Ajax.request({
+										url:'/deleteattendanceLaw',
+										method:'post',
+										params:{
+											'attendanceLaw_id':model.get('attendanceLaw_id'),
+											'station_kind':model.get('stationBasic.station_kind'),
+											'AL_validTime':model.get('AL_validTime'),
+											'AL_period':model.get('AL_period'),
+											'AL_times':model.get('AL_times'),
+											'AL_validStartTime':model.get('AL_validStartTime'),
+											'AL_validEndTime':model.get('AL_validEndTime')
+										},
+										dataType:'text',
+										success : function(response){
+											var val = response.responseText;
+											if(val == "Y"){
+												Ext.Msg.alert("成功","删除成功",true);
+												var grid = Ext.getCmp('gridshow');//通过grid的id拿到grid
+												grid.store.reload();//刷新数据，也就是重新向后台请求加载数据
+											}
+											if(val == "N"){
+												Ext.Msg.alert("失败","删除失败",true);	
+											}	
+										}
+									});
+								}
+							}else{
+								return;
+							}
+						});
+					}
+				}
+			}
+		}
+]
+	},        
+        });           
+
+// 新增弹框
+var addPanel = Ext.create('Ext.form.Panel',{
+	id:'addPanel',
+	bodyStyle:{
+		padding:'20px'
+	},
+	items : [ {
+		xtype : "textfield",
+		labelWidth : 120,
+		fieldLabel : "站点类型",
+		name:"kind"
+	}, {
+		xtype : "textfield",
+		labelWidth : 120,
+		fieldLabel : "有效时长",
+		name:"AL_validTime"
+	},{
+		xtype : "textfield",
+		labelWidth : 120,				 
+		fieldLabel : "周期",
+		name:"AL_period"
+	},{
+		xtype : "textfield",
+		labelWidth : 120,
+		fieldLabel : "次数",
+		name:"AL_times"
+	},{
+		xtype: 'datefield',
+		fieldLabel: '规则有效期间_开始',
+		name:"AL_validStartTime",
+		labelWidth : 120,
+		value: new Date()  // 初始日期为当前日期
+	 },{
+		 xtype: 'datefield',
+		 fieldLabel: '规则有效期间_结束',
+		 labelWidth : 120,
+		 name:"AL_validEndTime",
+		 value: new Date()  // 初始日期为当前日期
+	}],
+		 buttons: [{
+            text: '取消',
+            handler: function() {
+                this.up('form').getForm().reset();
+                this.up('window').hide();
+           	}
+        }, {
+            text: '保存',
+            handler: function() {
+			var form = addPanel.getForm();
+			alert(form.findField("kind").getValue());
+			Ext.Ajax.request({
+				url : './addAttendanceLaw',
+				method : 'post',
+				params : {
+					'AL_validTime' : form.findField("AL_validTime").getValue(),
+					'AL_period' : form.findField("AL_period").getValue(),
+					'AL_times' : form.findField("AL_times").getValue(),
+					'AL_validStartTime' : Ext.util.Format.date(form.findField("AL_validStartTime").getValue(), 'Y-m-d'),
+					'AL_validEndTime' : Ext.util.Format.date(form.findField("AL_validEndTime").getValue(), 'Y-m-d'),
+					'station_kind' : form.findField("kind").getValue(),
+				},
+				dataType : 'text',
+				success : function(response) {
+					var val = response.responseText;
+					if (val == 'Y') {
+						Ext.Msg.alert("成功","添加成功",true);
+						var grid = Ext.getCmp('gridshow');//通过grid的id取到grid
+						grid.store.reload();//刷新数据，也就是向后台请求数据再加载出来
+						addWindow.close();
+					}
+					if (val == 'N') {
+						Ext.Msg.alert("失败","添加失败",true);
+					}
+				}
+			})
+          }
+       }]
+});
+
+//更新弹窗
+var updatePanel = Ext.create('Ext.form.Panel',{
+	id:'updatePanel',
+	bodyStyle:{
+		padding:'20px'
+	},
+	items : [ {
+		xtype : "textfield",
+		id : "AttendanceLaw_id",
+		labelWidth : 120,
+		fieldLabel : "id",
+		disabled:true,
+		name:"AttendanceLawId"
+		
+	},{
+		xtype : "textfield",
+		id : "AL_kind",
+		labelWidth : 120,
+		fieldLabel : "站点类型",
+		name:"kind"
+		
+	}, {
+		xtype : "textfield",
+		labelWidth : 120,
+		fieldLabel : "有效时长",
+		name:"AL_validTime",
+		id:"ALvalidTime"
+	},{
+		xtype : "textfield",
+		labelWidth : 120,				 
+		fieldLabel : "周期",
+		name:"AL_period",
+		id:"ALperiod"
+	},{
+		xtype : "textfield",
+		labelWidth : 120,
+		fieldLabel : "次数",
+		name:"AL_times",
+		id:"ALtimes"
+	},{
+        xtype: 'datefield',
+        fieldLabel: '规则有效期间_开始',
+        name:"AL_validStartTime",
+        id:"ALvalidStartTime",
+        labelWidth : 120,
+        value: new Date()  // 初始日期为当前日期
+    },{
+        xtype: 'datefield',
+        fieldLabel: '规则有效期间_结束',
+        labelWidth : 120,
+        name:"AL_validEndTime",
+        id:"ALvalidEndTime",
+        value: new Date()  // 初始日期为当前日期
+    }],
+    buttons: [{
+    	text: '取消',
+    	handler: function() {
+        	this.up('form').getForm().reset();
+        	this.up('window').hide();
+   		}
+	}, {
+    	text: '更新',
+    	handler: function() {
+		var form = updatePanel.getForm();
+		Ext.Ajax.request({
+			url : './updateAttendanceLaw',
+			method : 'post',
+			params : {
+				'AttendanceLaw_id' : form.findField("AttendanceLaw_id").getValue(),
+				'AL_validTime' : form.findField("AL_validTime").getValue(),
+				'AL_period' : form.findField("AL_period").getValue(),
+				'AL_times' : form.findField("AL_times").getValue(),
+				'AL_validStartTime' : Ext.util.Format.date(form.findField("AL_validStartTime").getValue(), 'Y-m-d'),
+				'AL_validEndTime' : Ext.util.Format.date(form.findField("AL_validEndTime").getValue(), 'Y-m-d'),
+				'station_kind' : form.findField("kind").getValue(),
+			},
+			dataType : 'text',
+			success : function(response) {
+				var val = response.responseText;
+				if (val == 'Y') {
+					Ext.Msg.alert("成功","更新成功",true);
+					var grid = Ext.getCmp('gridshow');//通过grid的id取到grid
+					grid.store.reload();//刷新数据，也就是向后台请求数据再加载出来
+					updateWindow.close();
+				}
+				if (val == 'N') {
+					Ext.Msg.alert("失败","更新失败",true);
+				}
+			}
+		})
+    	}
+	}]
+});
+	
+//新增窗口
+var addWindow = Ext.create('Ext.window.Window',{
+	title : "添加考勤规则",
+	closeAction : "hide",//设置该属性新增窗口关闭的时候是隐藏
+	items:addPanel,
+	layout : "fit",
+	
+});
+
+//更新窗口
+var updateWindow = Ext.create('Ext.window.Window',{
+	title : "更新考勤规则",
+	closeAction : "hide",//设置该属性新增窗口关闭的时候是隐藏
+	items:updatePanel,
+	layout : "fit",
+	
+});
+//窗口
+var window = Ext.create("Ext.window.Window", {
+	layout : 'anchor',
+	items : grid,
+	closable : false,
+	bbar : [ {
+				xtype : 'pagingtoolbar',
+				store : store,
+				displayMsg : '显示 {0} - {1} 条，共计 {2} 条',
+				emptyMsg : "没有数据",
+				beforePageText : "当前页",
+				afterPageText : "共{0}页",
+				displayInfo : true
+			} ]
+});
+	window.show();
+	window.fitContainer();// 填充满浏览器 
+});
+		function showAlert() {
+			var selectedData = grid.getSelectionModel().getSelection()[0].data;
+
+			Ext.MessageBox.alert("标题", selectedData.cataId);
+		}
+	</script>
+</html>

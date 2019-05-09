@@ -9,5 +9,4 @@ public class HdhjApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HdhjApplication.class, args);
 	}
-
 }

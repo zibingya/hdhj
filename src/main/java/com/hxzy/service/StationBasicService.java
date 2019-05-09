@@ -10,4 +10,6 @@ import com.hxzy.entity.StationBasic;
 public interface StationBasicService {
 	//查找所有的站点信息
 	public List<StationBasic> getStationBasicList();
+	
+	public StationBasic findOne(String station_kind);
 }
