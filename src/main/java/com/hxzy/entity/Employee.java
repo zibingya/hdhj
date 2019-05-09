@@ -1,5 +1,6 @@
 package com.hxzy.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,12 @@ import javax.persistence.Table;
  * */
 @Entity
 @Table(name="Employee")
-public class Employee {
+public class Employee implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8200084210493074667L;
 
 	/** 巡维卡号 */
 	@Id
@@ -49,7 +55,7 @@ public class Employee {
 	private String Eemail;
 	
 	@OneToMany(cascade= CascadeType.REFRESH,fetch=FetchType.LAZY)
-	@JoinColumn(name="ar_ename",referencedColumnName="Ename")
+	//@JoinColumn(name="ar_ename",referencedColumnName="Ename")
 	private Set<AttendanceRecord> arSet = new HashSet<AttendanceRecord>();
 
 	public String getEname() {

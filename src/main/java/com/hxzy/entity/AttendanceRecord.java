@@ -30,7 +30,7 @@ public class AttendanceRecord implements Serializable{
 
 	/** 人员 */
 	@ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REFRESH},optional=false)
-	@JoinColumn(name="ar_ename",referencedColumnName="Ename")
+	//@JoinColumn(name="ar_ename",referencedColumnName="Ename")
 	private Employee employee;
 
 	/** 到达时间 */
@@ -47,7 +47,7 @@ public class AttendanceRecord implements Serializable{
 
 	/** 站点编号 */
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH }, optional = false) 
-	@JoinColumn(name = "ar_station_no")
+	//@JoinColumn(name = "ar_station_no")
 	private StationBasic stationBasic;
 
 	public int getAr_id() {

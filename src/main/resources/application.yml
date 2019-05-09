@@ -3,7 +3,7 @@ server:
   
 spring:
   datasource:
-    url: jdbc:oracle:thin:@192.168.1.108:1521:orcl
+    url: jdbc:oracle:thin:@localhost:1521:orcl
     driver-class-name: oracle.jdbc.driver.OracleDriver
     username: scott
     password: tiger
@@ -13,8 +13,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  aop:
+    auto: true
   mvc:
     view:
-      prefix: /webapp/
+      prefix: /
       suffix: .html
+    
     
